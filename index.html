@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grimorio Botánico de la Meiga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-night: #09100c;
+      --bg-panel: #132118;
+      --bg-panel-2: #192b20;
+      --ink-light: #f3ecdc;
+      --ink-soft: #b8c4b8;
+      --ink-muted: #88988a;
+      --moss: #3d7a52;
+      --gold: #dfb058;
+      --plum-soft: rgba(141, 91, 136, 0.22);
+      --water-soft: rgba(86, 180, 211, 0.16);
+      --sun-soft: rgba(235, 177, 52, 0.16);
+      --alert-soft: rgba(224, 99, 83, 0.18);
+      --ok-soft: rgba(88, 184, 120, 0.16);
+      --border-gold: rgba(223, 176, 88, 0.28);
+      --shadow-deep: 0 14px 36px rgba(0, 0, 0, 0.55);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-night);
+      color: var(--ink-light);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(87, 163, 113, 0.14) 0%, transparent 42%),
+        radial-gradient(circle at 85% 18%, rgba(223, 176, 88, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(141, 91, 136, 0.10) 0%, transparent 50%);
+    }
+
+    .sparkle-field {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #ffe39f;
+      box-shadow: 0 0 10px #ffd269, 0 0 20px rgba(255, 210, 105, 0.5);
+      animation: twinkle 4.5s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; transform: scale(0.8); }
+      50% { opacity: 0.9; transform: scale(1.45); }
+    }
+
+    header.grimorio-header {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(160deg, #070d09 0%, #112016 55%, #172a1e 100%);
+      padding: 1.6rem 1.5rem 1.75rem;
+      border-bottom: 2px solid var(--border-gold);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+
+    .title-block h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.55rem, 3.3vw, 2.45rem);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: #fae3ab;
+      text-shadow:
+        0 0 18px rgba(223, 176, 88, 0.35),
+        0 3px 12px rgba(0, 0, 0, 0.85);
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+    }
+
+    .sync-pill {
+      font-size: 0.76rem;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(223, 176, 88, 0.25);
+      padding: 0.36rem 0.78rem;
+      border-radius: 999px;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.56rem 1.05rem;
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      transition: transform 0.16s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #e7bc68, #be8c36);
+      color: #0c140e;
+      box-shadow: 0 0 18px rgba(223, 176, 88, 0.32);
+    }
+
+    .btn-moss {
+      background: linear-gradient(135deg, #4b8f62, #2f6341);
+      color: #f6fbf7;
+      border-color: rgba(114, 196, 141, 0.35);
+    }
+
+    .btn-soft {
+      background: var(--bg-panel-2);
+      color: var(--ink-light);
+      border-color: var(--border-gold);
+    }
+
+    .btn-soft:hover { background: #223a2c; }
+
+    .btn-water {
+      background: var(--water-soft);
+      color: #8ce0fc;
+      border-color: rgba(86, 180, 211, 0.42);
+    }
+
+    .btn-water:hover {
+      background: rgba(86, 180, 211, 0.28);
+      box-shadow: 0 0 12px rgba(86, 180, 211, 0.25);
+    }
+
+    .btn-sm { padding: 0.38rem 0.75rem; font-size: 0.79rem; }
+
+    main.container {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3.5rem;
+    }
+
+    .scenes-panel {
+      background: linear-gradient(180deg, rgba(19, 33, 24, 0.94) 0%, rgba(13, 23, 17, 0.96) 100%);
+      border: 1.5px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem 1.4rem;
+      box-shadow: var(--shadow-deep);
+      margin-bottom: 1.35rem;
+    }
+
+    .scenes-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .scenes-heading {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.02rem;
+      color: #f3d693;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .moon-lamp-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .moon-chip {
+      background: rgba(10, 17, 12, 0.85);
+      color: #fae3ab;
+      padding: 0.42rem 0.88rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border: 1px solid var(--border-gold);
+    }
+
+    .lamp-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--bg-panel-2);
+      border: 1px solid var(--border-gold);
+      border-radius: 999px;
+      padding: 0.36rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--ink-soft);
+      transition: all 0.2s ease;
+    }
+
+    .lamp-switch.is-on {
+      background: rgba(242, 183, 41, 0.16);
+      border-color: #f2b729;
+      color: #ffe28a;
+      box-shadow: 0 0 16px rgba(242, 183, 41, 0.3);
+    }
+
+    .lamp-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #667569;
+    }
+
+    .lamp-switch.is-on .lamp-dot {
+      background: #ffd15c;
+      box-shadow: 0 0 10px #ffd15c;
+    }
+
+    .scenes-grid {
+      display: grid;
+      grid-template-columns: minmax(215px, 1.15fr) repeat(3, minmax(170px, 1fr));
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 960px) { .scenes-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .scenes-grid { grid-template-columns: 1fr; } }
+
+    .scene-card {
+      background: linear-gradient(180deg, #101c15 0%, #0b130e 100%);
+      border: 1.5px solid rgba(223, 176, 88, 0.24);
+      border-radius: 16px;
+      padding: 0.7rem 0.7rem 0.78rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    .scene-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(223, 176, 88, 0.18);
+    }
+
+    .scene-card.active {
+      border-color: #ffd166;
+      background: linear-gradient(180deg, #172b1f 0%, #0e1a13 100%);
+      box-shadow: 0 0 22px rgba(255, 209, 102, 0.25);
+    }
+
+    .scene-svg-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+    }
+
+    .scene-svg-box svg {
+      width: 100%;
+      height: auto;
+      max-height: 315px;
+      display: block;
+    }
+
+    .scene-label {
+      margin-top: 0.55rem;
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fae3ab;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.48rem;
+      padding: 0.24rem 0.82rem;
+      border-radius: 999px;
+      background: rgba(250, 227, 171, 0.08);
+      border: 1px solid rgba(223, 176, 88, 0.3);
+    }
+
+    .scene-count {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #e7bc68, #b88530);
+      color: #0b130e;
+      padding: 0.08rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    @keyframes swayLeaf {
+      0%, 100% { transform: rotate(-2.6deg); }
+      50% { transform: rotate(2.6deg); }
+    }
+
+    @keyframes riseBubble {
+      0% { transform: translateY(0) scale(0.9); opacity: 0.95; }
+      100% { transform: translateY(-14px) scale(1.15); opacity: 0; }
+    }
+
+    @keyframes shimmerGlow {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.95; }
+    }
+
+    .leaf-sway {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: swayLeaf 4s ease-in-out infinite;
+    }
+
+    .bubble-rise { animation: riseBubble 2.5s ease-in infinite; }
+    .bubble-rise-delay { animation: riseBubble 2.5s ease-in 1.1s infinite; }
+    .magic-glint { animation: shimmerGlow 3.2s ease-in-out infinite; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 760px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat-pill {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-deep);
+    }
+
+    .stat-pill .label { font-size: 0.8rem; color: var(--ink-soft); font-weight: 600; }
+    .stat-pill .value { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; font-weight: 700; color: #fae3ab; }
+    .stat-pill.urgent .value { color: #ff8b7b; }
+    .stat-pill.today .value { color: #ffd166; }
+
+    .filter-bar {
+      background: var(--bg-panel);
+      border: 1.5px solid var(--border-gold);
+      border-radius: 16px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-deep);
+    }
+
+    .filter-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      flex: 1;
+    }
+
+    .filter-select, .filter-search {
+      background: #0b140e;
+      border: 1px solid rgba(223, 176, 88, 0.35);
+      border-radius: 10px;
+      padding: 0.48rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--ink-light);
+    }
+
+    .filter-search::placeholder { color: var(--ink-muted); }
+    .filter-search { min-width: 175px; }
+
+    .view-switch {
+      display: inline-flex;
+      background: #0b140e;
+      padding: 0.22rem;
+      border-radius: 11px;
+      border: 1px solid rgba(223, 176, 88, 0.3);
+      gap: 0.2rem;
+    }
+
+    .view-btn {
+      border: none;
+      background: transparent;
+      padding: 0.38rem 0.72rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .view-btn.active {
+      background: linear-gradient(135deg, #e7bc68, #b88530);
+      color: #0b130e;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .plant-card {
+      background: linear-gradient(180deg, #142319 0%, #0e1912 100%);
+      border: 1.5px solid rgba(223, 176, 88, 0.25);
+      border-radius: var(--radius);
+      padding: 1.05rem;
+      box-shadow: var(--shadow-deep);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.85rem;
+      transition: transform 0.18s ease, border-color 0.2s ease;
+    }
+
+    .plant-card:hover { transform: translateY(-2px); border-color: rgba(223, 176, 88, 0.55); }
+    .plant-card-top { display: flex; gap: 0.85rem; align-items: center; }
+
+    .plant-visual {
+      width: 66px;
+      height: 66px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 50% 35%, rgba(87, 163, 113, 0.22), #09120c 78%);
+      border: 1px solid rgba(223, 176, 88, 0.32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .plant-visual img { width: 100%; height: 100%; object-fit: cover; }
+    .plant-visual svg { width: 54px; height: 54px; }
+
+    .plant-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.38rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #fae3ab;
+    }
+
+    .plant-meta-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.34rem; }
+
+    .tag {
+      font-size: 0.73rem;
+      font-weight: 600;
+      padding: 0.16rem 0.54rem;
+      border-radius: 999px;
+      background: rgba(87, 163, 113, 0.15);
+      color: #a4dfb6;
+      border: 1px solid rgba(87, 163, 113, 0.32);
+    }
+
+    .tag-type {
+      background: var(--plum-soft);
+      color: #e4b8e0;
+      border-color: rgba(188, 128, 182, 0.35);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.32rem;
+      font-size: 0.77rem;
+      font-weight: 700;
+      padding: 0.24rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .status-today { background: var(--sun-soft); color: #ffd670; border: 1px solid rgba(255, 214, 112, 0.35); }
+    .status-overdue { background: var(--alert-soft); color: #ff9487; border: 1px solid rgba(255, 148, 135, 0.35); }
+    .status-ok { background: var(--ok-soft); color: #8ce3a8; border: 1px solid rgba(140, 227, 168, 0.32); }
+
+    .plant-details {
+      font-size: 0.83rem;
+      color: var(--ink-soft);
+      background: rgba(8, 15, 11, 0.65);
+      border-radius: 11px;
+      padding: 0.65rem 0.75rem;
+      border: 1px dashed rgba(223, 176, 88, 0.24);
+    }
+
+    .plant-details p + p { margin-top: 0.28rem; }
+    .plant-details strong { color: #fae3ab; }
+
+    .plant-card-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.45rem;
+    }
+
+    .table-wrapper {
+      background: var(--bg-panel);
+      border: 1.5px solid var(--border-gold);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      box-shadow: var(--shadow-deep);
+      margin-bottom: 1.5rem;
+    }
+
+    table.plants-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; text-align: left; }
+    table.plants-table thead { background: #0a130d; color: #fae3ab; border-bottom: 1px solid var(--border-gold); }
+
+    table.plants-table th {
+      padding: 0.8rem 0.85rem;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    table.plants-table td {
+      padding: 0.72rem 0.85rem;
+      border-bottom: 1px solid rgba(223, 176, 88, 0.14);
+      vertical-align: middle;
+      color: var(--ink-light);
+    }
+
+    table.plants-table tbody tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+    table.plants-table tbody tr:hover { background: rgba(223, 176, 88, 0.07); }
+
+    .table-mini-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: #0a140e;
+      border: 1px solid rgba(223, 176, 88, 0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      vertical-align: middle;
+      margin-right: 0.48rem;
+    }
+
+    .table-mini-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .table-mini-icon svg { width: 28px; height: 28px; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 5, 0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal-box {
+      background: linear-gradient(180deg, #16261b 0%, #0e1a12 100%);
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+      color: var(--ink-light);
+    }
+
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .modal-header h2 { font-family: 'Cinzel Decorative', serif; font-size: 1.15rem; color: #fae3ab; }
+    .close-btn { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--ink-soft); }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    @media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.32rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label { font-size: 0.82rem; font-weight: 700; color: #fae3ab; }
+
+    .form-group input, .form-group select, .form-group textarea {
+      background: #09120c;
+      border: 1px solid rgba(223, 176, 88, 0.35);
+      border-radius: 10px;
+      padding: 0.55rem 0.72rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: var(--ink-light);
+    }
+
+    .icon-picker { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.45rem; }
+
+    .icon-option {
+      border: 1.5px solid rgba(223, 176, 88, 0.25);
+      background: #09120c;
+      border-radius: 10px;
+      padding: 0.35rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+      font-size: 0.68rem;
+      color: var(--ink-soft);
+    }
+
+    .icon-option.selected {
+      border-color: #ffd166;
+      background: rgba(223, 176, 88, 0.14);
+      color: #fae3ab;
+      font-weight: 700;
+    }
+
+    .icon-option svg { width: 30px; height: 30px; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1.15rem; }
+
+    .empty-state {
+      text-align: center;
+      padding: 2.2rem 1rem;
+      background: var(--bg-panel);
+      border: 1.5px dashed var(--border-gold);
+      border-radius: var(--radius);
+      color: var(--ink-soft);
+      margin-bottom: 1.25rem;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="sparkle-field" aria-hidden="true">
+    <span class="sparkle" style="top: 12%; left: 8%; animation-delay: 0s;"></span>
+    <span class="sparkle" style="top: 24%; left: 91%; animation-delay: 1.2s;"></span>
+    <span class="sparkle" style="top: 48%; left: 5%; animation-delay: 2.1s;"></span>
+    <span class="sparkle" style="top: 66%; left: 94%; animation-delay: 0.7s;"></span>
+    <span class="sparkle" style="top: 84%; left: 16%; animation-delay: 3.1s;"></span>
+    <span class="sparkle" style="top: 78%; left: 82%; animation-delay: 1.8s;"></span>
+  </div>
+
+  <header class="grimorio-header">
+    <div class="header-inner">
+      <div class="title-block">
+        <h1>Grimorio Botánico de la Meiga</h1>
+      </div>
+      <div class="header-actions">
+        <span class="sync-pill" id="syncStatus">🌿 Guardado local</span>
+        <button class="btn btn-gold" id="btnOpenAdd">+ Añadir planta</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="scenes-panel" aria-label="Rincones botánicos">
+      <div class="scenes-top-bar">
+        <div class="scenes-heading">☽ Rincones del Grimorio ☾</div>
+        <div class="moon-lamp-strip">
+          <div class="moon-chip" id="moonBadge">🌕 Calculando fase lunar...</div>
+          <button class="lamp-switch is-on" id="lampToggle" type="button" title="Horario automático: 09:00 a 17:00 (8h)">
+            <span class="lamp-dot"></span>
+            <span id="lampText">Luz invernadero: ON (09:00–17:00)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="scenes-grid">
+
+        <div class="scene-card" data-filter-group="vertical" title="Filtrar estante, bombillas e invernadero">
+          <div class="scene-svg-box">
+            <svg viewBox="0 0 230 335" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="witchyGlow" cx="50%" cy="48%" r="58%">
+                  <stop offset="0%" stop-color="#ffe58f" stop-opacity="0.72" />
+                  <stop offset="55%" stop-color="#e5a93c" stop-opacity="0.25" />
+                  <stop offset="100%" stop-color="#e5a93c" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="potionWater" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#7ce0ff" stop-opacity="0.72" />
+                  <stop offset="100%" stop-color="#2b8aa8" stop-opacity="0.88" />
+                </linearGradient>
+                <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65" />
+                  <stop offset="50%" stop-color="#b6ecff" stop-opacity="0.2" />
+                  <stop offset="100%" stop-color="#7cd4f5" stop-opacity="0.45" />
+                </linearGradient>
+              </defs>
+
+              <g id="macrame-shelf">
+                <circle cx="115" cy="9" r="3.5" fill="none" stroke="#dfb058" stroke-width="1.6" />
+                <line x1="115" y1="12.5" x2="115" y2="20" stroke="#c8a878" stroke-width="2.2" />
+                <rect x="44" y="20" width="142" height="6" rx="3" fill="#9c6c3e" stroke="#dfb058" stroke-width="0.9" />
+                <path d="M58 26 L40 86 M64 26 L46 86" stroke="#d8c3a5" stroke-width="2" fill="none" />
+                <path d="M172 26 L190 86 M166 26 L184 86" stroke="#d8c3a5" stroke-width="2" fill="none" />
+                <rect x="92" y="26" width="46" height="56" rx="3" fill="#233328" stroke="#dfb058" stroke-width="1" />
+                <path d="M98 33 L132 52 M132 33 L98 52 M98 52 L132 71 M132 52 L98 71" stroke="#dfb058" stroke-width="1.3" fill="none" opacity="0.85" />
+                <path d="M96 82 L94 98 M102 82 L101 100 M108 82 L108 97 M115 82 L115 101 M122 82 L122 97 M128 82 L129 100 M134 82 L136 98" stroke="#d8c3a5" stroke-width="1.4" />
+
+                <rect x="44" y="62" width="28" height="22" rx="4" fill="#273a2e" stroke="#dfb058" stroke-width="1.1" />
+                <circle cx="58" cy="73" r="3" fill="none" stroke="#dfb058" stroke-width="0.9" opacity="0.75" />
+                <g class="leaf-sway">
+                  <circle cx="52" cy="58" r="4.5" fill="#77b86d" />
+                  <circle cx="59" cy="56" r="5" fill="#90d184" />
+                  <circle cx="65" cy="59" r="4.2" fill="#63a159" />
+                  <circle cx="48" cy="65" r="3.5" fill="#77b86d" />
+                  <circle cx="50" cy="71" r="3.2" fill="#90d184" />
+                </g>
+
+                <rect x="101" y="62" width="28" height="22" rx="4" fill="#3a283d" stroke="#dfb058" stroke-width="1.1" />
+                <g class="leaf-sway">
+                  <circle cx="109" cy="58" r="4.5" fill="#5b9668" />
+                  <circle cx="116" cy="56" r="5" fill="#74b380" />
+                  <circle cx="122" cy="59" r="4.2" fill="#4c8257" />
+                </g>
+
+                <rect x="158" y="62" width="28" height="22" rx="4" fill="#273a2e" stroke="#dfb058" stroke-width="1.1" />
+                <g class="leaf-sway">
+                  <path d="M172 62 Q154 44 146 56" stroke="#64a867" stroke-width="2.2" fill="none" />
+                  <path d="M172 62 Q162 40 162 48" stroke="#85c987" stroke-width="2.2" fill="none" />
+                  <path d="M172 62 Q182 40 182 48" stroke="#85c987" stroke-width="2.2" fill="none" />
+                  <path d="M172 62 Q190 44 198 56" stroke="#64a867" stroke-width="2.2" fill="none" />
+                </g>
+
+                <rect x="34" y="84" width="162" height="7" rx="3" fill="#8f6135" stroke="#dfb058" stroke-width="1" />
+              </g>
+
+              <g id="propagacion-bulbs">
+                <rect x="112" y="114" width="6" height="44" rx="2" fill="#7a5029" stroke="#dfb058" stroke-width="0.8" />
+                <rect x="102" y="156" width="26" height="5" rx="2" fill="#633f1e" stroke="#dfb058" stroke-width="0.8" />
+
+                <circle cx="88" cy="143" r="15" fill="url(#potionWater)" stroke="#9be8ff" stroke-width="1.4" />
+                <circle cx="88" cy="143" r="15" fill="url(#glassShine)" />
+                <rect x="84" y="125" width="8" height="5" rx="1.5" fill="#dfb058" />
+                <path d="M88 128 Q84 136 88 144" stroke="#53b868" stroke-width="1.8" fill="none" />
+                <ellipse cx="83" cy="135" rx="4.5" ry="2.5" transform="rotate(-25 83 135)" fill="#6ad17d" class="leaf-sway" />
+                <ellipse cx="93" cy="137" rx="4.5" ry="2.5" transform="rotate(25 93 137)" fill="#88eb99" class="leaf-sway" />
+                <circle cx="84" cy="151" r="2" fill="#ffffff" class="bubble-rise" />
+                <circle cx="92" cy="149" r="1.5" fill="#d9f8ff" class="bubble-rise-delay" />
+                <circle cx="82" cy="138" r="1.4" fill="#fff5b8" class="magic-glint" />
+
+                <circle cx="142" cy="143" r="15" fill="url(#potionWater)" stroke="#9be8ff" stroke-width="1.4" />
+                <circle cx="142" cy="143" r="15" fill="url(#glassShine)" />
+                <rect x="138" y="125" width="8" height="5" rx="1.5" fill="#dfb058" />
+                <path d="M142 128 Q146 136 142 144" stroke="#53b868" stroke-width="1.8" fill="none" />
+                <ellipse cx="137" cy="136" rx="4.5" ry="2.5" transform="rotate(-20 137 136)" fill="#6ad17d" class="leaf-sway" />
+                <ellipse cx="147" cy="134" rx="4.5" ry="2.5" transform="rotate(20 147 134)" fill="#88eb99" class="leaf-sway" />
+                <circle cx="139" cy="151" r="1.7" fill="#d9f8ff" class="bubble-rise-delay" />
+                <circle cx="146" cy="149" r="2" fill="#ffffff" class="bubble-rise" />
+                <circle cx="148" cy="138" r="1.4" fill="#fff5b8" class="magic-glint" />
+              </g>
+
+              <g id="ikea-greenhouse">
+                <polygon points="34,175 56,161 174,161 196,175" fill="#1b2c21" stroke="#dfb058" stroke-width="1.3" />
+                <rect x="36" y="175" width="158" height="118" fill="#121e17" stroke="#dfb058" stroke-width="1.3" />
+                <rect id="lampGlowRect" x="42" y="183" width="146" height="104" fill="url(#witchyGlow)" opacity="1" />
+                <rect x="74" y="178" width="82" height="7" rx="3" fill="#fff2c2" stroke="#dfb058" stroke-width="1.1" />
+
+                <g class="leaf-sway">
+                  <rect x="52" y="252" width="24" height="22" rx="3" fill="#7c4732" stroke="#dfb058" stroke-width="1" />
+                  <path d="M64 252 L56 226 M64 252 L64 222 M64 252 L72 226" stroke="#6cc267" stroke-width="2.2" />
+                </g>
+
+                <g class="leaf-sway">
+                  <rect x="92" y="246" width="32" height="28" rx="4" fill="#2c3e32" stroke="#dfb058" stroke-width="1" />
+                  <circle cx="101" cy="236" r="8" fill="#68b863" />
+                  <circle cx="114" cy="233" r="9" fill="#84d47e" />
+                  <circle cx="108" cy="240" r="7" fill="#529e4e" />
+                </g>
+
+                <g class="leaf-sway">
+                  <rect x="140" y="252" width="28" height="22" rx="3" fill="#7c4732" stroke="#dfb058" stroke-width="1" />
+                  <ellipse cx="148" cy="238" rx="6" ry="9" transform="rotate(-18 148 238)" fill="#66ba61" />
+                  <ellipse cx="160" cy="238" rx="6" ry="9" transform="rotate(18 160 238)" fill="#84d47e" />
+                </g>
+
+                <rect x="34" y="293" width="162" height="24" rx="2" fill="#18261d" stroke="#dfb058" stroke-width="1.3" />
+                <line x1="87" y1="293" x2="87" y2="317" stroke="#dfb058" stroke-width="1.1" opacity="0.65" />
+                <line x1="143" y1="293" x2="143" y2="317" stroke="#dfb058" stroke-width="1.1" opacity="0.65" />
+                <rect x="40" y="317" width="8" height="10" rx="2" fill="#dfb058" />
+                <rect x="182" y="317" width="8" height="10" rx="2" fill="#dfb058" />
+              </g>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <span>Invernadero &amp; Estante</span>
+            <span class="scene-count" id="countVertical">0</span>
+          </div>
+        </div>
+
+        <div class="scene-card" data-filter-location="Cocina" title="Filtrar plantas de la Cocina">
+          <div class="scene-svg-box">
+            <svg viewBox="0 0 210 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="18" y="22" width="174" height="168" rx="14" fill="#142118" stroke="#dfb058" stroke-width="1.2" opacity="0.95" />
+              <rect x="44" y="42" width="122" height="76" rx="8" fill="#16323d" stroke="#85cde0" stroke-width="1.5" />
+              <line x1="105" y1="42" x2="105" y2="118" stroke="#85cde0" stroke-width="1.3" opacity="0.7" />
+              <line x1="44" y1="80" x2="166" y2="80" stroke="#85cde0" stroke-width="1.3" opacity="0.7" />
+              <circle cx="72" cy="64" r="2.2" fill="#ffe699" class="magic-glint" />
+              <circle cx="138" cy="96" r="2.5" fill="#ffe699" class="magic-glint" />
+
+              <rect x="12" y="190" width="186" height="14" rx="4" fill="#8f6135" stroke="#dfb058" stroke-width="1.1" />
+              <rect x="20" y="204" width="170" height="42" fill="#1b2b20" stroke="rgba(223,176,88,0.3)" stroke-width="1" />
+
+              <polygon points="34,190 62,190 58,162 38,162" fill="#7c4732" stroke="#dfb058" stroke-width="1.1" />
+              <g class="leaf-sway">
+                <circle cx="43" cy="152" r="9" fill="#63b359" />
+                <circle cx="53" cy="150" r="9" fill="#7fd173" />
+                <circle cx="48" cy="144" r="8" fill="#97e68b" />
+              </g>
+
+              <polygon points="88,190 122,190 118,160 92,160" fill="#2c3e32" stroke="#dfb058" stroke-width="1.1" />
+              <g class="leaf-sway">
+                <line x1="97" y1="160" x2="92" y2="118" stroke="#6ec25f" stroke-width="2.4" stroke-linecap="round" />
+                <line x1="102" y1="160" x2="100" y2="112" stroke="#8ce07d" stroke-width="2.4" stroke-linecap="round" />
+                <line x1="107" y1="160" x2="109" y2="114" stroke="#6ec25f" stroke-width="2.4" stroke-linecap="round" />
+                <line x1="112" y1="160" x2="118" y2="122" stroke="#8ce07d" stroke-width="2.4" stroke-linecap="round" />
+              </g>
+
+              <polygon points="146,190 176,190 172,162 150,162" fill="#7c4732" stroke="#dfb058" stroke-width="1.1" />
+              <g class="leaf-sway">
+                <ellipse cx="154" cy="148" rx="7" ry="10" transform="rotate(-20 154 148)" fill="#5eb054" />
+                <ellipse cx="166" cy="148" rx="7" ry="10" transform="rotate(20 166 148)" fill="#7ad16e" />
+                <ellipse cx="160" cy="140" rx="6.5" ry="9" fill="#95e889" />
+              </g>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <span>Cocina</span>
+            <span class="scene-count" id="countCocina">0</span>
+          </div>
+        </div>
+
+        <div class="scene-card" data-filter-location="Baño" title="Filtrar plantas del Baño">
+          <div class="scene-svg-box">
+            <svg viewBox="0 0 210 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="18" y="22" width="174" height="168" rx="14" fill="#112224" stroke="#78cde0" stroke-width="1.2" />
+              <circle cx="105" cy="76" r="36" fill="#193c42" stroke="#dfb058" stroke-width="2" />
+              <path d="M86 62 L114 90 M96 58 L118 80" stroke="#9be8ff" stroke-width="2.2" stroke-linecap="round" opacity="0.7" />
+
+              <circle cx="42" cy="58" r="3" fill="#7ce0ff" class="bubble-rise" />
+              <circle cx="168" cy="68" r="3.4" fill="#7ce0ff" class="bubble-rise-delay" />
+              <circle cx="156" cy="110" r="2.6" fill="#ffe699" class="magic-glint" />
+
+              <rect x="14" y="190" width="182" height="13" rx="4" fill="#234247" stroke="#dfb058" stroke-width="1.1" />
+              <rect x="22" y="203" width="166" height="43" fill="#14292c" stroke="rgba(120,205,224,0.28)" stroke-width="1" />
+
+              <path d="M36 172 Q50 192 64 172 Z" fill="#2b575e" stroke="#dfb058" stroke-width="1.1" />
+              <g class="leaf-sway">
+                <path d="M50 172 Q30 144 24 156" stroke="#58b073" stroke-width="2.4" fill="none" />
+                <path d="M50 172 Q38 134 38 142" stroke="#72cf8d" stroke-width="2.4" fill="none" />
+                <path d="M50 172 Q50 128 50 136" stroke="#8ce8a7" stroke-width="2.4" fill="none" />
+                <path d="M50 172 Q64 134 64 142" stroke="#72cf8d" stroke-width="2.4" fill="none" />
+                <path d="M50 172 Q72 144 76 156" stroke="#58b073" stroke-width="2.4" fill="none" />
+              </g>
+
+              <rect x="92" y="168" width="26" height="22" rx="4" fill="#7c4732" stroke="#dfb058" stroke-width="1.1" />
+              <g class="leaf-sway">
+                <circle cx="99" cy="164" r="4.5" fill="#5fb072" />
+                <circle cx="106" cy="162" r="5" fill="#79cc8c" />
+                <circle cx="112" cy="165" r="4.2" fill="#4e9960" />
+              </g>
+
+              <rect x="142" y="168" width="28" height="22" rx="4" fill="#233d38" stroke="#dfb058" stroke-width="1.1" />
+              <g class="leaf-sway">
+                <path d="M156 168 Q138 148 130 158" stroke="#64b876" stroke-width="2.2" fill="none" />
+                <path d="M156 168 Q146 144 146 152" stroke="#84d695" stroke-width="2.2" fill="none" />
+                <path d="M156 168 Q166 144 166 152" stroke="#84d695" stroke-width="2.2" fill="none" />
+                <path d="M156 168 Q174 148 182 158" stroke="#64b876" stroke-width="2.2" fill="none" />
+              </g>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <span>Baño</span>
+            <span class="scene-count" id="countBano">0</span>
+          </div>
+        </div>
+
+        <div class="scene-card" data-filter-location="Salón" title="Filtrar plantas del Salón">
+          <div class="scene-svg-box">
+            <svg viewBox="0 0 210 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="18" y="22" width="174" height="168" rx="14" fill="#181522" stroke="#dfb058" stroke-width="1.2" />
+              <circle cx="170" cy="48" r="10" fill="#ffe599" opacity="0.85" class="magic-glint" />
+              <circle cx="173" cy="46" r="9" fill="#181522" />
+
+              <rect x="14" y="190" width="182" height="13" rx="4" fill="#7c4e29" stroke="#dfb058" stroke-width="1.1" />
+              <rect x="24" y="203" width="10" height="43" fill="#5c381c" />
+              <rect x="176" y="203" width="10" height="43" fill="#5c381c" />
+
+              <g class="leaf-sway">
+                <rect x="34" y="168" width="22" height="22" rx="3" fill="#3b2b47" stroke="#dfb058" stroke-width="1.1" />
+                <line x1="41" y1="168" x2="39" y2="128" stroke="#7da86e" stroke-width="1.8" />
+                <line x1="45" y1="168" x2="45" y2="122" stroke="#7da86e" stroke-width="1.8" />
+                <line x1="49" y1="168" x2="51" y2="130" stroke="#7da86e" stroke-width="1.8" />
+                <ellipse cx="39" cy="126" rx="3.2" ry="6" fill="#a87ce0" />
+                <ellipse cx="45" cy="120" rx="3.5" ry="6.5" fill="#c398fa" />
+                <ellipse cx="51" cy="128" rx="3.2" ry="6" fill="#a87ce0" />
+              </g>
+
+              <g class="leaf-sway">
+                <rect x="68" y="166" width="26" height="24" rx="4" fill="#7c4732" stroke="#dfb058" stroke-width="1.1" />
+                <path d="M77 166 L73 128 M84 166 L87 132" stroke="#64b868" stroke-width="2.2" />
+              </g>
+
+              <g class="leaf-sway">
+                <rect x="106" y="168" width="26" height="22" rx="4" fill="#7c4732" stroke="#dfb058" stroke-width="1.1" />
+                <circle cx="114" cy="158" r="7" fill="#74b867" />
+                <circle cx="123" cy="157" r="7.5" fill="#8fd482" />
+              </g>
+
+              <g class="leaf-sway">
+                <rect x="144" y="165" width="28" height="25" rx="4" fill="#2c4234" stroke="#dfb058" stroke-width="1.1" />
+                <ellipse cx="152" cy="150" rx="6.5" ry="9.5" transform="rotate(-18 152 150)" fill="#5eb054" />
+                <ellipse cx="164" cy="150" rx="6.5" ry="9.5" transform="rotate(20 164 150)" fill="#7ad16e" />
+                <ellipse cx="158" cy="142" rx="6" ry="8.5" fill="#95e889" />
+              </g>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <span>Salón</span>
+            <span class="scene-count" id="countSalon">0</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="stats-row" aria-label="Resumen de riego">
+      <div class="stat-pill"><span class="label">Total plantas</span><span class="value" id="statTotal">0</span></div>
+      <div class="stat-pill today"><span class="label">Tocan hoy</span><span class="value" id="statToday">0</span></div>
+      <div class="stat-pill urgent"><span class="label">Atrasadas</span><span class="value" id="statOverdue">0</span></div>
+      <div class="stat-pill"><span class="label">Al día</span><span class="value" id="statOk">0</span></div>
+    </section>
+
+    <section class="filter-bar" aria-label="Filtros">
+      <div class="filter-controls">
+        <select class="filter-select location-select" aria-label="Filtrar por ubicación">
+          <option value="ALL">📍 Todas las ubicaciones</option>
+          <option value="Bombillas">💡 Bombillas</option>
+          <option value="Estante Macramé">🪢 Estante Macramé</option>
+          <option value="Invernadero">🏡 Invernadero</option>
+          <option value="Cocina">🍳 Cocina</option>
+          <option value="Baño">🛁 Baño</option>
+          <option value="Salón">🛋️ Salón</option>
+        </select>
+
+        <select class="filter-select type-select" aria-label="Filtrar por tipo de planta">
+          <option value="ALL">🌱 Todos los tipos</option>
+          <option value="Hierbas aromáticas">🌿 Hierbas aromáticas</option>
+          <option value="Suculentas">🌵 Suculentas</option>
+          <option value="Colgantes / Trepa">🪴 Colgantes / Trepa</option>
+          <option value="Helechos y humedad">🌾 Helechos y humedad</option>
+        </select>
+
+        <select class="filter-select water-select" aria-label="Filtrar por estado de riego">
+          <option value="ALL">💧 Cualquier estado de riego</option>
+          <option value="NEEDS">⚠️ Toca hoy o atrasada</option>
+          <option value="TODAY">☀️ Toca hoy</option>
+          <option value="OVERDUE">🔴 Atrasada</option>
+          <option value="OK">✅ Al día</option>
+        </select>
+
+        <input type="search" class="filter-search" placeholder="Buscar planta..." aria-label="Buscar planta" />
+        <button type="button" class="btn btn-soft btn-sm btn-clear-filters">Limpiar</button>
+      </div>
+
+      <div class="view-switch" role="group" aria-label="Cambiar vista">
+        <button type="button" class="view-btn active" data-view="cards">Tarjetas</button>
+        <button type="button" class="view-btn" data-view="table">Tabla</button>
+        <button type="button" class="view-btn" data-view="both">Ambas</button>
+      </div>
+    </section>
+
+    <section id="cardsSection" class="cards-grid" aria-label="Listado en tarjetas"></section>
+
+    <section id="tableSection" class="table-wrapper hidden" aria-label="Listado en tabla">
+      <table class="plants-table">
+        <thead>
+          <tr>
+            <th>Planta</th>
+            <th>Ubicación</th>
+            <th>Tipo</th>
+            <th>Sol / Luz</th>
+            <th>Cada (días)</th>
+            <th>Último riego</th>
+            <th>Próximo riego</th>
+            <th>Estado</th>
+            <th>Cuidados</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <div class="modal-backdrop" id="plantModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="modalTitle">Añadir planta al Grimorio</h2>
+        <button type="button" class="close-btn" id="closeModalBtn" aria-label="Cerrar">&times;</button>
+      </div>
+
+      <form id="plantForm">
+        <input type="hidden" id="plantId" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="plantName">Nombre de la planta *</label>
+            <input type="text" id="plantName" required placeholder="Ej. Romero rastrero o postrado" />
+          </div>
+
+          <div class="form-group">
+            <label for="plantLocation">Ubicación *</label>
+            <select id="plantLocation" required>
+              <option value="Bombillas">Bombillas</option>
+              <option value="Estante Macramé">Estante Macramé</option>
+              <option value="Invernadero">Invernadero</option>
+              <option value="Cocina">Cocina</option>
+              <option value="Baño">Baño</option>
+              <option value="Salón">Salón</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="plantType">Tipo de planta *</label>
+            <select id="plantType" required>
+              <option value="Hierbas aromáticas">Hierbas aromáticas</option>
+              <option value="Suculentas">Suculentas</option>
+              <option value="Colgantes / Trepa">Colgantes / Trepa</option>
+              <option value="Helechos y humedad">Helechos y humedad</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="plantLight">Sol / Luz</label>
+            <input type="text" id="plantLight" placeholder="Ej. Lámpara de crecimiento..." />
+          </div>
+
+          <div class="form-group">
+            <label for="plantFreq">Riego cada (días) *</label>
+            <input type="number" id="plantFreq" min="1" max="60" value="4" required />
+          </div>
+
+          <div class="form-group">
+            <label for="plantLastWater">Último riego *</label>
+            <input type="date" id="plantLastWater" required />
+          </div>
+
+          <div class="form-group full">
+            <label>Icono witchy animado</label>
+            <div class="icon-picker" id="iconPicker"></div>
+          </div>
+
+          <div class="form-group full">
+            <label for="plantPhotoInput">O subir foto propia (opcional)</label>
+            <input type="file" id="plantPhotoInput" accept="image/*" />
+          </div>
+
+          <div class="form-group full">
+            <label for="plantNotes">Cuidados y notas</label>
+            <textarea id="plantNotes" rows="2" placeholder="Sustrato, pulverizado, poda, cambio de agua..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-soft" id="cancelModalBtn">Cancelar</button>
+          <button type="submit" class="btn btn-moss">Guardar en el Grimorio</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const GOOGLE_SHEET_API_URL = '';
+    const STORAGE_KEY = 'grimorio_botanico_meiga_v5';
+
+    function formatDateISO(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function addDaysISO(isoStr, days) {
+      const [y, m, d] = isoStr.split('-').map(Number);
+      const dt = new Date(y, m - 1, d);
+      dt.setDate(dt.getDate() + Number(days || 0));
+      return formatDateISO(dt);
+    }
+
+    const TODAY_STR = formatDateISO(new Date());
+
+    function isLampScheduleOn() {
+      const hour = new Date().getHours();
+      return hour >= 9 && hour < 17;
+    }
+
+    const PLANT_ICONS = {
+      menta: {
+        label: 'Hierba',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 46 L23 21 M32 46 L32 16 M32 46 L41 21" stroke="#53b869" stroke-width="2.4" stroke-linecap="round"/>
+            <ellipse cx="21" cy="23" rx="7.5" ry="4.5" transform="rotate(-30 21 23)" fill="#6bd17e"/>
+            <ellipse cx="43" cy="23" rx="7.5" ry="4.5" transform="rotate(30 43 23)" fill="#88eb99"/>
+            <ellipse cx="32" cy="15" rx="6" ry="8" fill="#5bc271"/>
+          </g>
+          <polygon points="20,46 44,46 41,57 23,57" fill="#3a2542" stroke="#dfb058" stroke-width="1.3"/>
+          <circle cx="32" cy="51.5" r="2.2" fill="none" stroke="#dfb058" stroke-width="1"/>
+        </svg>`
+      },
+      suculenta: {
+        label: 'Suculenta',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <ellipse cx="21" cy="35" rx="9.5" ry="5" transform="rotate(-25 21 35)" fill="#68b576"/>
+            <ellipse cx="43" cy="35" rx="9.5" ry="5" transform="rotate(25 43 35)" fill="#68b576"/>
+            <ellipse cx="25" cy="28" rx="8" ry="4.5" transform="rotate(-15 25 28)" fill="#85d493"/>
+            <ellipse cx="39" cy="28" rx="8" ry="4.5" transform="rotate(15 39 28)" fill="#85d493"/>
+            <circle cx="32" cy="29" r="6.5" fill="#a5f0b2"/>
+          </g>
+          <rect x="20" y="41" width="24" height="16" rx="4" fill="#1d3326" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      colgante: {
+        label: 'Colgante',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <g class="leaf-sway">
+            <path d="M22 23 Q13 38 15 53" stroke="#62b568" stroke-width="2" fill="none"/>
+            <path d="M32 23 Q32 40 32 55" stroke="#7dd483" stroke-width="2" fill="none"/>
+            <path d="M42 23 Q51 38 49 53" stroke="#62b568" stroke-width="2" fill="none"/>
+            <circle cx="15" cy="40" r="3.6" fill="#88de8e"/>
+            <circle cx="15" cy="50" r="3.6" fill="#6bc271"/>
+            <circle cx="32" cy="43" r="4" fill="#9cf2a2"/>
+            <circle cx="49" cy="41" r="3.6" fill="#88de8e"/>
+          </g>
+          <rect x="19" y="13" width="26" height="12" rx="3" fill="#7d4f28" stroke="#dfb058" stroke-width="1.2"/>
+        </svg>`
+      },
+      bulbilla: {
+        label: 'Pócima',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="39" r="16" fill="#2994b8" stroke="#9be8ff" stroke-width="1.5"/>
+          <rect x="28" y="18" width="8" height="5" rx="1.5" fill="#dfb058"/>
+          <g class="leaf-sway">
+            <path d="M32 23 L32 45" stroke="#53c76b" stroke-width="2"/>
+            <ellipse cx="26" cy="31" rx="5.5" ry="3" transform="rotate(-25 26 31)" fill="#6ee386"/>
+            <ellipse cx="38" cy="33" rx="5.5" ry="3" transform="rotate(25 38 33)" fill="#8bf7a1"/>
+          </g>
+          <circle cx="28" cy="48" r="2.1" fill="#ffffff" class="bubble-rise"/>
+          <circle cx="36" cy="46" r="1.6" fill="#d9f8ff" class="bubble-rise-delay"/>
+        </svg>`
+      },
+      helecho: {
+        label: 'Helecho',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <g class="leaf-sway">
+            <path d="M32 44 Q13 21 9 29" stroke="#55b574" stroke-width="2.4" fill="none"/>
+            <path d="M32 44 Q24 13 22 19" stroke="#6fd18e" stroke-width="2.4" fill="none"/>
+            <path d="M32 44 Q40 13 42 19" stroke="#6fd18e" stroke-width="2.4" fill="none"/>
+            <path d="M32 44 Q51 21 55 29" stroke="#55b574" stroke-width="2.4" fill="none"/>
+          </g>
+          <polygon points="21,44 43,44 40,56 24,56" fill="#1d3d42" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      lavanda: {
+        label: 'Lavanda',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="49" cy="13" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M26 44 L23 20 M32 44 L32 15 M38 44 L41 20" stroke="#76a868" stroke-width="2" fill="none"/>
+            <ellipse cx="23" cy="18" rx="3.2" ry="6" fill="#a678de"/>
+            <ellipse cx="32" cy="13" rx="3.5" ry="6.8" fill="#c599fc"/>
+            <ellipse cx="41" cy="18" rx="3.2" ry="6" fill="#a678de"/>
+          </g>
+          <polygon points="21,44 43,44 40,56 24,56" fill="#3a2847" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      }
+    };
+
+    const DEFAULT_PLANTS = [
+      { id: 'p-1', nombre: 'Hierbabuena', ubicacion: 'Bombillas', tipo: 'Hierbas aromáticas', luz: 'Luz indirecta / cercanía lámpara', frecuencia: 5, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'bulbilla', foto: '', notas: 'Renovar agua de la bombilla y revisar raíces.' },
+      { id: 'p-2', nombre: 'Sedum burrito', ubicacion: 'Estante Macramé', tipo: 'Suculentas', luz: 'Luz brillante / estante alto', frecuencia: 12, ultimoRiego: addDaysISO(TODAY_STR, -7), icono: 'colgante', foto: '', notas: 'Dejar secar bien el sustrato; manipular con cuidado.' },
+      { id: 'p-3', nombre: 'Peperomia prostrata mini', ubicacion: 'Estante Macramé', tipo: 'Colgantes / Trepa', luz: 'Luz brillante filtrada', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -7), icono: 'colgante', foto: '', notas: 'Riego moderado cuando las hojitas pierden firmeza.' },
+      { id: 'p-4', nombre: 'Planta araña', ubicacion: 'Estante Macramé', tipo: 'Colgantes / Trepa', luz: 'Luz brillante sin sol directo fuerte', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'colgante', foto: '', notas: 'Puntas marrones si falta humedad o exceso de sales.' },
+      { id: 'p-5', nombre: 'Romero', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'menta', foto: '', notas: 'Ventilar el invernadero para evitar exceso de humedad.' },
+      { id: 'p-6', nombre: 'Perejil', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'menta', foto: '', notas: 'Mantener el sustrato ligeramente húmedo sin encharcar.' },
+      { id: 'p-7', nombre: 'Menta', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'menta', foto: '', notas: 'Agradece riego frecuente y poda suave para ramificar.' },
+      { id: 'p-8', nombre: 'Hierbabuena', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -1), icono: 'menta', foto: '', notas: 'Sustrato fresco bajo la lámpara de crecimiento.' },
+      { id: 'p-9', nombre: 'Perejil', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Luz natural de cocina', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'menta', foto: '', notas: 'Cortar tallos exteriores primero.' },
+      { id: 'p-10', nombre: 'Cebollino', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Luz natural de cocina', frecuencia: 5, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'menta', foto: '', notas: 'Buen drenaje en la maceta de cocina.' },
+      { id: 'p-11', nombre: 'Albahaca', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Mucha luz natural', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'menta', foto: '', notas: 'Proteger de corrientes frías; regar al secarse arriba.' },
+      { id: 'p-12', nombre: 'Helecho', ubicacion: 'Baño', tipo: 'Helechos y humedad', luz: 'Luz suave / humedad del baño', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -1), icono: 'helecho', foto: '', notas: 'Disfruta de la humedad ambiental del baño.' },
+      { id: 'p-13', nombre: 'Peperomia prostrata mini', ubicacion: 'Baño', tipo: 'Colgantes / Trepa', luz: 'Luz filtrada del baño', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'colgante', foto: '', notas: 'Comprobar que el sustrato drene bien.' },
+      { id: 'p-14', nombre: 'Planta araña', ubicacion: 'Baño', tipo: 'Colgantes / Trepa', luz: 'Luz suave / ambiente húmedo', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -6), icono: 'colgante', foto: '', notas: 'Revisar raíces si lleva tiempo en la misma maceta.' },
+      { id: 'p-15', nombre: 'Romero erecto o común', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'menta', foto: '', notas: 'Porte vertical; sustrato aireado y sin exceso de agua.' },
+      { id: 'p-16', nombre: 'Romero rastrero o postrado', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'colgante', foto: '', notas: 'Porte extendido o colgante; buen drenaje.' },
+      { id: 'p-17', nombre: 'Lavanda', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'La zona más luminosa del salón', frecuencia: 8, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'lavanda', foto: '', notas: 'Regar solo cuando el sustrato esté seco.' },
+      { id: 'p-18', nombre: 'Tomillo común', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Buena luz del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'menta', foto: '', notas: 'Riego espaciado y buen drenaje.' },
+      { id: 'p-19', nombre: 'Tomillo limón', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Buena luz del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -8), icono: 'menta', foto: '', notas: 'Aroma cítrico; dejar secar la capa superior entre riegos.' },
+      { id: 'p-20', nombre: 'Albahaca', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'menta', foto: '', notas: 'Pinzar flores si aparecen para potenciar el follaje.' }
+    ];
+
+    let state = {
+      plants: [],
+      location: 'ALL',
+      verticalActive: false,
+      type: 'ALL',
+      water: 'ALL',
+      search: '',
+      view: 'cards',
+      lampOn: isLampScheduleOn()
+    };
+
+    function setSyncStatus(text) {
+      document.getElementById('syncStatus').textContent = text;
+    }
+
+    async function loadPlantsData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.plants) && parsed.plants.length > 0) {
+            state.plants = parsed.plants;
+            if (parsed.view) state.view = parsed.view;
+          }
+        }
+      } catch (e) {}
+
+      if (state.plants.length === 0) {
+        state.plants = DEFAULT_PLANTS.slice();
+      }
+      refreshAll(false);
+
+      if (GOOGLE_SHEET_API_URL) {
+        try {
+          setSyncStatus('⏳ Sincronizando Sheet...');
+          const res = await fetch(GOOGLE_SHEET_API_URL);
+          const data = await res.json();
+          if (data.status === 'ok' && Array.isArray(data.plantas) && data.plantas.length > 0) {
+            state.plants = data.plantas.map(p => ({ ...p, foto: '' }));
+            saveLocalBackup();
+            refreshAll(false);
+          }
+          setSyncStatus('☁️ Conectado a Google Sheet');
+        } catch (err) {
+          setSyncStatus('⚠️ Sin conexión al Sheet');
+        }
+      }
+    }
+
+    function saveLocalBackup() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        plants: state.plants,
+        view: state.view
+      }));
+    }
+
+    async function sendToGoogleSheet(payload) {
+      if (!GOOGLE_SHEET_API_URL) return true;
+      try {
+        setSyncStatus('⏳ Guardando en Sheet...');
+        await fetch(GOOGLE_SHEET_API_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        setSyncStatus('☁️ Guardado en Google Sheet');
+        return true;
+      } catch (err) {
+        setSyncStatus('⚠️ Guardado local (sin red)');
+        return true;
+      }
+    }
+
+    function getWaterStatus(plant) {
+      const nextDate = addDaysISO(plant.ultimoRiego, plant.frecuencia);
+      if (nextDate < TODAY_STR) return { code: 'OVERDUE', label: 'Atrasada', nextDate, badgeClass: 'status-overdue', icon: '🔴' };
+      if (nextDate === TODAY_STR) return { code: 'TODAY', label: 'Toca hoy', nextDate, badgeClass: 'status-today', icon: '☀️' };
+      return { code: 'OK', label: 'Al día', nextDate, badgeClass: 'status-ok', icon: '✅' };
+    }
+
+    function computeMoonPhase() {
+      const now = new Date();
+      const synodic = 29.53058867;
+      const knownNewMoon = new Date(Date.UTC(2024, 0, 11, 11, 57, 0));
+      const daysSince = (now - knownNewMoon) / 86400000;
+      const phase = ((daysSince % synodic) + synodic) % synodic;
+
+      if (phase < 1.85) return '🌑 Luna Nueva';
+      if (phase < 7.38) return '🌒 Cuarto Creciente';
+      if (phase < 9.22) return '🌓 Creciente';
+      if (phase < 14.77) return '🌔 Gibosa Creciente';
+      if (phase < 16.61) return '🌕 Luna Llena';
+      if (phase < 22.15) return '🌖 Gibosa Menguante';
+      if (phase < 23.99) return '🌗 Cuarto Menguante';
+      return '🌘 Luna Menguante';
+    }
+
+    function updateLampUI() {
+      const btn = document.getElementById('lampToggle');
+      const txt = document.getElementById('lampText');
+      const glow = document.getElementById('lampGlowRect');
+      if (state.lampOn) {
+        btn.classList.add('is-on');
+        txt.textContent = 'Luz invernadero: ON (09:00–17:00)';
+        if (glow) glow.setAttribute('opacity', '1');
+      } else {
+        btn.classList.remove('is-on');
+        txt.textContent = 'Luz invernadero: OFF (09:00–17:00)';
+        if (glow) glow.setAttribute('opacity', '0');
+      }
+    }
+
+    function updateSceneCounts() {
+      const verticalLocs = ['Bombillas', 'Estante Macramé', 'Invernadero'];
+      document.getElementById('countVertical').textContent = state.plants.filter(p => verticalLocs.includes(p.ubicacion)).length;
+      document.getElementById('countCocina').textContent = state.plants.filter(p => p.ubicacion === 'Cocina').length;
+      document.getElementById('countBano').textContent = state.plants.filter(p => p.ubicacion === 'Baño').length;
+      document.getElementById('countSalon').textContent = state.plants.filter(p => p.ubicacion === 'Salón').length;
+
+      document.querySelectorAll('.scene-card').forEach(card => {
+        if (card.dataset.filterGroup === 'vertical') {
+          card.classList.toggle('active', state.verticalActive);
+        } else if (card.dataset.filterLocation) {
+          card.classList.toggle('active', !state.verticalActive && state.location === card.dataset.filterLocation);
+        }
+      });
+    }
+
+    function updateStats() {
+      let today = 0, overdue = 0, ok = 0;
+      state.plants.forEach(p => {
+        const st = getWaterStatus(p);
+        if (st.code === 'TODAY') today++;
+        else if (st.code === 'OVERDUE') overdue++;
+        else ok++;
+      });
+      document.getElementById('statTotal').textContent = state.plants.length;
+      document.getElementById('statToday').textContent = today;
+      document.getElementById('statOverdue').textContent = overdue;
+      document.getElementById('statOk').textContent = ok;
+    }
+
+    function getFilteredPlants() {
+      const verticalLocs = ['Bombillas', 'Estante Macramé', 'Invernadero'];
+      const q = state.search.trim().toLowerCase();
+
+      return state.plants.filter(p => {
+        if (state.verticalActive) {
+          if (!verticalLocs.includes(p.ubicacion)) return false;
+        } else if (state.location !== 'ALL') {
+          if (p.ubicacion !== state.location) return false;
+        }
+
+        if (state.type !== 'ALL' && p.tipo !== state.type) return false;
+
+        const st = getWaterStatus(p);
+        if (state.water === 'NEEDS' && st.code === 'OK') return false;
+        if (state.water === 'TODAY' && st.code !== 'TODAY') return false;
+        if (state.water === 'OVERDUE' && st.code !== 'OVERDUE') return false;
+        if (state.water === 'OK' && st.code !== 'OK') return false;
+
+        if (q) {
+          const hay = `${p.nombre} ${p.ubicacion} ${p.tipo} ${p.luz || ''} ${p.notas || ''}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+
+        return true;
+      });
+    }
+
+    function renderPlantVisual(plant) {
+      if (plant.foto) return `<img src="${plant.foto}" alt="${escapeHtml(plant.nombre)}" />`;
+      const iconObj = PLANT_ICONS[plant.icono] || PLANT_ICONS.menta;
+      return iconObj.svg;
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderPlants() {
+      const filtered = getFilteredPlants();
+      const cardsEl = document.getElementById('cardsSection');
+      const tableEl = document.getElementById('tableSection');
+      const tbodyEl = document.getElementById('tableBody');
+
+      cardsEl.classList.toggle('hidden', state.view === 'table');
+      tableEl.classList.toggle('hidden', state.view === 'cards');
+
+      if (filtered.length === 0) {
+        cardsEl.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">
+          No hay plantas que coincidan con este filtro. ¡Prueba a limpiar filtros o añadir una nueva!
+        </div>`;
+        tbodyEl.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.5rem; color:#88988a;">
+          No hay plantas que coincidan con este filtro.
+        </td></tr>`;
+        return;
+      }
+
+      cardsEl.innerHTML = filtered.map(p => {
+        const st = getWaterStatus(p);
+        return `
+          <article class="plant-card">
+            <div>
+              <div class="plant-card-top">
+                <div class="plant-visual">${renderPlantVisual(p)}</div>
+                <div>
+                  <h3 class="plant-title">${escapeHtml(p.nombre)}</h3>
+                  <div class="plant-meta-tags">
+                    <span class="tag">${escapeHtml(p.ubicacion)}</span>
+                    <span class="tag tag-type">${escapeHtml(p.tipo)}</span>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:0.65rem;">
+                <span class="status-badge ${st.badgeClass}">${st.icon} ${st.label} · Próx: ${st.nextDate}</span>
+              </div>
+            </div>
+
+            <div class="plant-details">
+              <p><strong>☀️ Luz:</strong> ${escapeHtml(p.luz || 'Sin especificar')}</p>
+              <p><strong>💧 Riego:</strong> cada ${p.frecuencia} días (último: ${p.ultimoRiego})</p>
+              ${p.notas ? `<p><strong>📝 Cuidados:</strong> ${escapeHtml(p.notas)}</p>` : ''}
+            </div>
+
+            <div class="plant-card-footer">
+              <button type="button" class="btn btn-water btn-sm" onclick="waterPlant('${p.id}')">💧 Regar hoy</button>
+              <div style="display:flex; gap:0.35rem;">
+                <button type="button" class="btn btn-soft btn-sm" onclick="openEditModal('${p.id}')">Editar</button>
+                <button type="button" class="btn btn-soft btn-sm" onclick="deletePlant('${p.id}')" title="Eliminar">🗑️</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      tbodyEl.innerHTML = filtered.map(p => {
+        const st = getWaterStatus(p);
+        return `
+          <tr>
+            <td>
+              <span class="table-mini-icon">${renderPlantVisual(p)}</span>
+              <strong>${escapeHtml(p.nombre)}</strong>
+            </td>
+            <td>${escapeHtml(p.ubicacion)}</td>
+            <td>${escapeHtml(p.tipo)}</td>
+            <td>${escapeHtml(p.luz || '—')}</td>
+            <td>${p.frecuencia}</td>
+            <td>${p.ultimoRiego}</td>
+            <td>${st.nextDate}</td>
+            <td><span class="status-badge ${st.badgeClass}">${st.icon} ${st.label}</span></td>
+            <td>${escapeHtml(p.notas || '—')}</td>
+            <td style="white-space:nowrap;">
+              <button type="button" class="btn btn-water btn-sm" onclick="waterPlant('${p.id}')">💧 Regar</button>
+              <button type="button" class="btn btn-soft btn-sm" onclick="openEditModal('${p.id}')">✏️</button>
+              <button type="button" class="btn btn-soft btn-sm" onclick="deletePlant('${p.id}')">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function syncFilterControlsUI() {
+      document.querySelector('.location-select').value = state.verticalActive ? 'ALL' : state.location;
+      document.querySelector('.type-select').value = state.type;
+      document.querySelector('.water-select').value = state.water;
+      const searchInp = document.querySelector('.filter-search');
+      if (searchInp.value !== state.search) searchInp.value = state.search;
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === state.view);
+      });
+      updateSceneCounts();
+    }
+
+    function refreshAll(shouldSave = true) {
+      if (shouldSave) saveLocalBackup();
+      syncFilterControlsUI();
+      updateStats();
+      renderPlants();
+    }
+
+    window.waterPlant = async function(id) {
+      const plant = state.plants.find(p => p.id === id);
+      if (!plant) return;
+      plant.ultimoRiego = TODAY_STR;
+      refreshAll();
+      await sendToGoogleSheet({ accion: 'regar', id });
+    };
+
+    window.deletePlant = async function(id) {
+      if (!confirm('¿Quitar esta planta del Grimorio?')) return;
+      state.plants = state.plants.filter(p => p.id !== id);
+      refreshAll();
+      await sendToGoogleSheet({ accion: 'eliminar', id });
+    };
+
+    const modal = document.getElementById('plantModal');
+    const form = document.getElementById('plantForm');
+    const iconPicker = document.getElementById('iconPicker');
+    let selectedIcon = 'menta';
+    let uploadedPhotoData = '';
+
+    function renderIconPicker() {
+      iconPicker.innerHTML = Object.entries(PLANT_ICONS).map(([key, obj]) => `
+        <button type="button" class="icon-option ${selectedIcon === key ? 'selected' : ''}" data-icon="${key}">
+          ${obj.svg}
+          <span>${obj.label}</span>
+        </button>
+      `).join('');
+
+      iconPicker.querySelectorAll('.icon-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedIcon = btn.dataset.icon;
+          uploadedPhotoData = '';
+          document.getElementById('plantPhotoInput').value = '';
+          renderIconPicker();
+        });
+      });
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = 'Añadir planta al Grimorio';
+      form.reset();
+      document.getElementById('plantId').value = '';
+      document.getElementById('plantFreq').value = 5;
+      document.getElementById('plantLastWater').value = TODAY_STR;
+      selectedIcon = 'menta';
+      uploadedPhotoData = '';
+      renderIconPicker();
+      modal.classList.add('open');
+    }
+
+    window.openEditModal = function(id) {
+      const p = state.plants.find(item => item.id === id);
+      if (!p) return;
+      document.getElementById('modalTitle').textContent = 'Editar planta';
+      document.getElementById('plantId').value = p.id;
+      document.getElementById('plantName').value = p.nombre;
+      document.getElementById('plantLocation').value = p.ubicacion;
+      document.getElementById('plantType').value = p.tipo;
+      document.getElementById('plantLight').value = p.luz || '';
+      document.getElementById('plantFreq').value = p.frecuencia;
+      document.getElementById('plantLastWater').value = p.ultimoRiego;
+      document.getElementById('plantNotes').value = p.notas || '';
+      document.getElementById('plantPhotoInput').value = '';
+      selectedIcon = p.icono || 'menta';
+      uploadedPhotoData = p.foto || '';
+      renderIconPicker();
+      modal.classList.add('open');
+    };
+
+    function closeModal() { modal.classList.remove('open'); }
+
+    document.getElementById('btnOpenAdd').addEventListener('click', openAddModal);
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    document.getElementById('plantPhotoInput').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => { uploadedPhotoData = reader.result; };
+      reader.readAsDataURL(file);
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const idVal = document.getElementById('plantId').value;
+      const nombre = document.getElementById('plantName').value.trim();
+      if (!nombre) return;
+
+      const entry = {
+        id: idVal || ('p-' + Date.now()),
+        nombre,
+        ubicacion: document.getElementById('plantLocation').value,
+        tipo: document.getElementById('plantType').value,
+        luz: document.getElementById('plantLight').value.trim(),
+        frecuencia: Math.max(1, Number(document.getElementById('plantFreq').value) || 5),
+        ultimoRiego: document.getElementById('plantLastWater').value || TODAY_STR,
+        icono: selectedIcon,
+        foto: uploadedPhotoData,
+        notas: document.getElementById('plantNotes').value.trim()
+      };
+
+      if (idVal) {
+        const idx = state.plants.findIndex(item => item.id === idVal);
+        if (idx !== -1) state.plants[idx] = entry;
+      } else {
+        state.plants.push(entry);
+      }
+
+      closeModal();
+      refreshAll();
+
+      await sendToGoogleSheet({
+        accion: idVal ? 'editar' : 'agregar',
+        ...entry
+      });
+    });
+
+    document.querySelectorAll('.scene-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (card.dataset.filterGroup === 'vertical') {
+          state.verticalActive = !state.verticalActive;
+          state.location = 'ALL';
+        } else if (card.dataset.filterLocation) {
+          const loc = card.dataset.filterLocation;
+          state.verticalActive = false;
+          state.location = (state.location === loc) ? 'ALL' : loc;
+        }
+        refreshAll(false);
+      });
+    });
+
+    document.getElementById('lampToggle').addEventListener('click', () => {
+      state.lampOn = !state.lampOn;
+      updateLampUI();
+    });
+
+    document.querySelector('.location-select').addEventListener('change', (e) => {
+      state.verticalActive = false;
+      state.location = e.target.value;
+      refreshAll(false);
+    });
+
+    document.querySelector('.type-select').addEventListener('change', (e) => {
+      state.type = e.target.value;
+      refreshAll(false);
+    });
+
+    document.querySelector('.water-select').addEventListener('change', (e) => {
+      state.water = e.target.value;
+      refreshAll(false);
+    });
+
+    document.querySelector('.filter-search').addEventListener('input', (e) => {
+      state.search = e.target.value;
+      refreshAll(false);
+    });
+
+    document.querySelector('.btn-clear-filters').addEventListener('click', () => {
+      state.location = 'ALL';
+      state.verticalActive = false;
+      state.type = 'ALL';
+      state.water = 'ALL';
+      state.search = '';
+      refreshAll(false);
+    });
+
+    document.querySelectorAll('.view-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.view = btn.dataset.view;
+        refreshAll();
+      });
+    });
+
+    setInterval(() => {
+      const shouldBeOn = isLampScheduleOn();
+      if (state.lampOn !== shouldBeOn) {
+        state.lampOn = shouldBeOn;
+        updateLampUI();
+      }
+    }, 60000);
+
+    document.getElementById('moonBadge').textContent = computeMoonPhase();
+    updateLampUI();
+    renderIconPicker();
+    loadPlantsData();
+  </script>
+</body>
+</html>
