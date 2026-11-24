@@ -629,7 +629,7 @@
       color: var(--ink-light);
     }
 
-    .icon-picker { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.45rem; }
+    .icon-picker { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.45rem; }
 
     .icon-option {
       border: 1.5px solid rgba(223, 176, 88, 0.25);
@@ -1092,11 +1092,6 @@
           </div>
 
           <div class="form-group full">
-            <label for="plantPhotoInput">O subir foto propia (opcional)</label>
-            <input type="file" id="plantPhotoInput" accept="image/*" />
-          </div>
-
-          <div class="form-group full">
             <label for="plantNotes">Cuidados y notas</label>
             <textarea id="plantNotes" rows="2" placeholder="Sustrato, pulverizado, poda, cambio de agua..."></textarea>
           </div>
@@ -1136,32 +1131,78 @@
     }
 
     const PLANT_ICONS = {
-      menta: {
-        label: 'Hierba',
+      albahaca: {
+        label: 'Albahaca',
         svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="14" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <circle cx="48" cy="15" r="1.8" fill="#ffe699" class="magic-glint"/>
           <g class="leaf-sway">
-            <path d="M32 46 L23 21 M32 46 L32 16 M32 46 L41 21" stroke="#53b869" stroke-width="2.4" stroke-linecap="round"/>
-            <ellipse cx="21" cy="23" rx="7.5" ry="4.5" transform="rotate(-30 21 23)" fill="#6bd17e"/>
-            <ellipse cx="43" cy="23" rx="7.5" ry="4.5" transform="rotate(30 43 23)" fill="#88eb99"/>
-            <ellipse cx="32" cy="15" rx="6" ry="8" fill="#5bc271"/>
+            <path d="M32 46 L32 18" stroke="#4da85c" stroke-width="2.3" stroke-linecap="round"/>
+            <ellipse cx="22" cy="32" rx="8.5" ry="5" transform="rotate(-24 22 32)" fill="#62bf6e"/>
+            <ellipse cx="42" cy="32" rx="8.5" ry="5" transform="rotate(24 42 32)" fill="#7cd986"/>
+            <ellipse cx="24" cy="22" rx="7" ry="4.2" transform="rotate(-18 24 22)" fill="#7cd986"/>
+            <ellipse cx="40" cy="22" rx="7" ry="4.2" transform="rotate(18 40 22)" fill="#96eda0"/>
+            <ellipse cx="32" cy="15" rx="6" ry="4.5" fill="#62bf6e"/>
           </g>
-          <polygon points="20,46 44,46 41,57 23,57" fill="#3a2542" stroke="#dfb058" stroke-width="1.3"/>
-          <circle cx="32" cy="51.5" r="2.2" fill="none" stroke="#dfb058" stroke-width="1"/>
+          <polygon points="20,46 44,46 41,57 23,57" fill="#472838" stroke="#dfb058" stroke-width="1.3"/>
         </svg>`
       },
-      suculenta: {
-        label: 'Suculenta',
+      arana: {
+        label: 'Araña',
         svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <circle cx="15" cy="14" r="1.7" fill="#ffe699" class="magic-glint"/>
           <g class="leaf-sway">
-            <ellipse cx="21" cy="35" rx="9.5" ry="5" transform="rotate(-25 21 35)" fill="#68b576"/>
-            <ellipse cx="43" cy="35" rx="9.5" ry="5" transform="rotate(25 43 35)" fill="#68b576"/>
-            <ellipse cx="25" cy="28" rx="8" ry="4.5" transform="rotate(-15 25 28)" fill="#85d493"/>
-            <ellipse cx="39" cy="28" rx="8" ry="4.5" transform="rotate(15 39 28)" fill="#85d493"/>
-            <circle cx="32" cy="29" r="6.5" fill="#a5f0b2"/>
+            <path d="M32 37 Q17 20 11 26" stroke="#5db567" stroke-width="2.2" fill="none"/>
+            <path d="M32 37 Q24 14 21 18" stroke="#7ad182" stroke-width="2.2" fill="none"/>
+            <path d="M32 37 Q32 12 32 16" stroke="#96eba0" stroke-width="2.3" fill="none"/>
+            <path d="M32 37 Q40 14 43 18" stroke="#7ad182" stroke-width="2.2" fill="none"/>
+            <path d="M32 37 Q47 20 53 26" stroke="#5db567" stroke-width="2.2" fill="none"/>
+            <path d="M12 26 L10 35 M52 26 L54 35" stroke="#88de90" stroke-width="1.5" fill="none"/>
+            <circle cx="10" cy="36.5" r="2.6" fill="#9cf2a4"/>
+            <circle cx="54" cy="36.5" r="2.6" fill="#9cf2a4"/>
           </g>
-          <rect x="20" y="41" width="24" height="16" rx="4" fill="#1d3326" stroke="#dfb058" stroke-width="1.3"/>
+          <polygon points="21,38 43,38 40,56 24,56" fill="#32263d" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      bromelia: {
+        label: 'Bromelia',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="49" cy="13" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 45 L16 26 L27 37 Z" fill="#54a868"/>
+            <path d="M32 45 L48 26 L37 37 Z" fill="#6bc27e"/>
+            <path d="M32 45 L22 20 L30 35 Z" fill="#7fd692"/>
+            <path d="M32 45 L42 20 L34 35 Z" fill="#63b876"/>
+            <polygon points="32,14 27,27 32,24 37,27" fill="#e86a58"/>
+          </g>
+          <polygon points="20,45 44,45 41,57 23,57" fill="#2c243b" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      calatea: {
+        label: 'Calatea',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="48" cy="13" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 45 L22 22 M32 45 L32 17 M32 45 L42 22" stroke="#4da364" stroke-width="2.2" stroke-linecap="round"/>
+            <ellipse cx="21" cy="23" rx="7.5" ry="4.5" transform="rotate(-28 21 23)" fill="#58b872"/>
+            <ellipse cx="43" cy="23" rx="7.5" ry="4.5" transform="rotate(28 43 23)" fill="#74d18c"/>
+            <ellipse cx="32" cy="16" rx="6.5" ry="8" fill="#63c47d"/>
+            <path d="M29 13 L35 19 M35 13 L29 19" stroke="#c882c8" stroke-width="1.2" opacity="0.8"/>
+          </g>
+          <polygon points="20,45 44,45 41,57 23,57" fill="#32233b" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      cebollino: {
+        label: 'Cebollino',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <g class="leaf-sway">
+            <path d="M27 46 L21 15" stroke="#67bd60" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M30 46 L28 12" stroke="#85d97c" stroke-width="2.3" stroke-linecap="round"/>
+            <path d="M34 46 L36 13" stroke="#67bd60" stroke-width="2.3" stroke-linecap="round"/>
+            <path d="M37 46 L44 17" stroke="#85d97c" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="28" cy="11" r="2.5" fill="#d49eff"/>
+            <circle cx="36" cy="12" r="2.2" fill="#be82f2"/>
+          </g>
+          <polygon points="20,46 44,46 41,57 23,57" fill="#23362b" stroke="#dfb058" stroke-width="1.3"/>
         </svg>`
       },
       colgante: {
@@ -1179,18 +1220,19 @@
           <rect x="19" y="13" width="26" height="12" rx="3" fill="#7d4f28" stroke="#dfb058" stroke-width="1.2"/>
         </svg>`
       },
-      bulbilla: {
-        label: 'Pócima',
+      haworthia: {
+        label: 'Haworthia',
         svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="39" r="16" fill="#2994b8" stroke="#9be8ff" stroke-width="1.5"/>
-          <rect x="28" y="18" width="8" height="5" rx="1.5" fill="#dfb058"/>
+          <circle cx="15" cy="14" r="1.7" fill="#ffe699" class="magic-glint"/>
           <g class="leaf-sway">
-            <path d="M32 23 L32 45" stroke="#53c76b" stroke-width="2"/>
-            <ellipse cx="26" cy="31" rx="5.5" ry="3" transform="rotate(-25 26 31)" fill="#6ee386"/>
-            <ellipse cx="38" cy="33" rx="5.5" ry="3" transform="rotate(25 38 33)" fill="#8bf7a1"/>
+            <polygon points="32,16 20,41 32,37" fill="#66b874"/>
+            <polygon points="32,16 44,41 32,37" fill="#84d491"/>
+            <polygon points="23,24 14,42 26,41" fill="#54a362"/>
+            <polygon points="41,24 50,42 38,41" fill="#72c480"/>
+            <line x1="25" y1="34" x2="29" y2="33" stroke="#e4fae8" stroke-width="1.2"/>
+            <line x1="39" y1="34" x2="35" y2="33" stroke="#e4fae8" stroke-width="1.2"/>
           </g>
-          <circle cx="28" cy="48" r="2.1" fill="#ffffff" class="bubble-rise"/>
-          <circle cx="36" cy="46" r="1.6" fill="#d9f8ff" class="bubble-rise-delay"/>
+          <polygon points="20,42 44,42 41,57 23,57" fill="#21382a" stroke="#dfb058" stroke-width="1.3"/>
         </svg>`
       },
       helecho: {
@@ -1205,6 +1247,20 @@
           <polygon points="21,44 43,44 40,56 24,56" fill="#1d3d42" stroke="#dfb058" stroke-width="1.3"/>
         </svg>`
       },
+      menta: {
+        label: 'Hierba',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 46 L23 21 M32 46 L32 16 M32 46 L41 21" stroke="#53b869" stroke-width="2.4" stroke-linecap="round"/>
+            <ellipse cx="21" cy="23" rx="7.5" ry="4.5" transform="rotate(-30 21 23)" fill="#6bd17e"/>
+            <ellipse cx="43" cy="23" rx="7.5" ry="4.5" transform="rotate(30 43 23)" fill="#88eb99"/>
+            <ellipse cx="32" cy="15" rx="6" ry="8" fill="#5bc271"/>
+          </g>
+          <polygon points="20,46 44,46 41,57 23,57" fill="#3a2542" stroke="#dfb058" stroke-width="1.3"/>
+          <circle cx="32" cy="51.5" r="2.2" fill="none" stroke="#dfb058" stroke-width="1"/>
+        </svg>`
+      },
       lavanda: {
         label: 'Lavanda',
         svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
@@ -1217,30 +1273,172 @@
           </g>
           <polygon points="21,44 43,44 40,56 24,56" fill="#3a2847" stroke="#dfb058" stroke-width="1.3"/>
         </svg>`
+      },
+      orquidea: {
+        label: 'Orquídea',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="15" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <ellipse cx="23" cy="41" rx="7.5" ry="4" transform="rotate(-20 23 41)" fill="#59b06b"/>
+            <ellipse cx="41" cy="41" rx="7.5" ry="4" transform="rotate(20 41 41)" fill="#6ec980"/>
+            <path d="M32 39 Q36 27 32 16" stroke="#75c482" stroke-width="2" fill="none"/>
+            <circle cx="32" cy="16" r="4.5" fill="#e394dc"/>
+            <circle cx="27" cy="21" r="4" fill="#d478cc"/>
+            <circle cx="37" cy="23" r="4" fill="#f0afea"/>
+            <circle cx="32" cy="16" r="1.5" fill="#ffe270"/>
+          </g>
+          <polygon points="21,44 43,44 40,57 24,57" fill="#3a2542" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      palma_areca: {
+        label: 'Palma areca',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="13" r="1.7" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 45 Q17 26 10 21" stroke="#5db567" stroke-width="2.2" fill="none"/>
+            <path d="M32 45 Q26 22 22 14" stroke="#74cc7e" stroke-width="2.2" fill="none"/>
+            <path d="M32 45 Q38 22 42 14" stroke="#8be094" stroke-width="2.2" fill="none"/>
+            <path d="M32 45 Q47 26 54 21" stroke="#5db567" stroke-width="2.2" fill="none"/>
+            <path d="M18 25 L14 31 M23 21 L19 27 M27 17 L24 23" stroke="#74cc7e" stroke-width="1.6"/>
+            <path d="M46 25 L50 31 M41 21 L45 27 M37 17 L40 23" stroke="#8be094" stroke-width="1.6"/>
+          </g>
+          <polygon points="20,45 44,45 41,57 23,57" fill="#7c4732" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      peperomia: {
+        label: 'Peperomia',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="15" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 45 L22 28 M32 45 L42 28 M32 45 L32 20" stroke="#57ab66" stroke-width="2.1" stroke-linecap="round"/>
+            <ellipse cx="21" cy="27" rx="6.5" ry="4.5" transform="rotate(-25 21 27)" fill="#6bc47a"/>
+            <ellipse cx="43" cy="27" rx="6.5" ry="4.5" transform="rotate(25 43 27)" fill="#86de94"/>
+            <ellipse cx="32" cy="19" rx="6" ry="7.5" fill="#77d186"/>
+          </g>
+          <polygon points="20,45 44,45 41,57 23,57" fill="#23382c" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      pilea: {
+        label: 'Pilea',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <line x1="32" y1="45" x2="21" y2="27" stroke="#5db368" stroke-width="2"/>
+            <line x1="32" y1="45" x2="43" y2="27" stroke="#5db368" stroke-width="2"/>
+            <line x1="32" y1="45" x2="32" y2="18" stroke="#6ec779" stroke-width="2.2"/>
+            <circle cx="20" cy="26" r="6.5" fill="#68bf73"/>
+            <circle cx="44" cy="26" r="6.5" fill="#85db8f"/>
+            <circle cx="32" cy="17" r="7" fill="#78cf82"/>
+            <circle cx="32" cy="17" r="1.5" fill="#3a7d44"/>
+          </g>
+          <polygon points="20,45 44,45 41,57 23,57" fill="#7c4732" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      bulbilla: {
+        label: 'Pócima',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="39" r="16" fill="#2994b8" stroke="#9be8ff" stroke-width="1.5"/>
+          <rect x="28" y="18" width="8" height="5" rx="1.5" fill="#dfb058"/>
+          <g class="leaf-sway">
+            <path d="M32 23 L32 45" stroke="#53c76b" stroke-width="2"/>
+            <ellipse cx="26" cy="31" rx="5.5" ry="3" transform="rotate(-25 26 31)" fill="#6ee386"/>
+            <ellipse cx="38" cy="33" rx="5.5" ry="3" transform="rotate(25 38 33)" fill="#8bf7a1"/>
+          </g>
+          <circle cx="28" cy="48" r="2.1" fill="#ffffff" class="bubble-rise"/>
+          <circle cx="36" cy="46" r="1.6" fill="#d9f8ff" class="bubble-rise-delay"/>
+        </svg>`
+      },
+      romero: {
+        label: 'Romero',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="15" r="1.7" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 46 L32 15" stroke="#5b9e5e" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M32 37 L21 31 M32 37 L43 31 M32 28 L22 22 M32 28 L42 22 M32 20 L25 16 M32 20 L39 16" stroke="#78c97a" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="32" cy="14" r="2.6" fill="#b892ff"/>
+          </g>
+          <polygon points="20,46 44,46 41,57 23,57" fill="#293b2e" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      semillero: {
+        label: 'Semillero',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="12" r="2" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 41 L32 27" stroke="#62bd65" stroke-width="2.2" stroke-linecap="round"/>
+            <ellipse cx="25" cy="25" rx="6.5" ry="3.8" transform="rotate(-22 25 25)" fill="#82db85"/>
+            <ellipse cx="39" cy="25" rx="6.5" ry="3.8" transform="rotate(22 39 25)" fill="#9ef5a1"/>
+          </g>
+          <polygon points="19,41 45,41 42,56 22,56" fill="#253b2d" stroke="#dfb058" stroke-width="1.3"/>
+          <ellipse cx="32" cy="41.5" rx="12" ry="2.5" fill="#4d3221"/>
+        </svg>`
+      },
+      suculenta: {
+        label: 'Suculenta',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="14" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <ellipse cx="21" cy="35" rx="9.5" ry="5" transform="rotate(-25 21 35)" fill="#68b576"/>
+            <ellipse cx="43" cy="35" rx="9.5" ry="5" transform="rotate(25 43 35)" fill="#68b576"/>
+            <ellipse cx="25" cy="28" rx="8" ry="4.5" transform="rotate(-15 25 28)" fill="#85d493"/>
+            <ellipse cx="39" cy="28" rx="8" ry="4.5" transform="rotate(15 39 28)" fill="#85d493"/>
+            <circle cx="32" cy="29" r="6.5" fill="#a5f0b2"/>
+          </g>
+          <rect x="20" y="41" width="24" height="16" rx="4" fill="#1d3326" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
+      },
+      tillandsia: {
+        label: 'Tillandsia',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="49" cy="13" r="1.8" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 43 Q15 28 11 19" stroke="#79b898" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            <path d="M32 43 Q23 22 21 13" stroke="#93cfb0" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            <path d="M32 43 Q41 22 43 13" stroke="#a8e0c3" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            <path d="M32 43 Q49 28 53 19" stroke="#79b898" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            <ellipse cx="32" cy="16" rx="3.2" ry="5.5" fill="#d97ae0"/>
+          </g>
+          <path d="M22 46 Q32 56 42 46" stroke="#dfb058" stroke-width="1.3" fill="none"/>
+        </svg>`
+      },
+      tomillo: {
+        label: 'Tomillo',
+        svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="15" r="1.7" fill="#ffe699" class="magic-glint"/>
+          <g class="leaf-sway">
+            <path d="M32 45 L32 22 M32 36 L22 29 M32 36 L42 29 M32 28 L24 23 M32 28 L40 23" stroke="#63b568" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="22" cy="28" r="2.3" fill="#e699c8"/>
+            <circle cx="42" cy="28" r="2.3" fill="#e699c8"/>
+            <circle cx="32" cy="21" r="2.5" fill="#f2b3da"/>
+            <circle cx="24" cy="22" r="2" fill="#d488f0"/>
+            <circle cx="40" cy="22" r="2" fill="#d488f0"/>
+          </g>
+          <polygon points="20,45 44,45 41,57 23,57" fill="#2c3d30" stroke="#dfb058" stroke-width="1.3"/>
+        </svg>`
       }
     };
 
     const DEFAULT_PLANTS = [
-      { id: 'p-1', nombre: 'Hierbabuena', ubicacion: 'Bombillas', tipo: 'Hierbas aromáticas', luz: 'Luz indirecta / cercanía lámpara', frecuencia: 5, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'bulbilla', foto: '', notas: 'Renovar agua de la bombilla y revisar raíces.' },
-      { id: 'p-2', nombre: 'Sedum burrito', ubicacion: 'Estante Macramé', tipo: 'Suculentas', luz: 'Luz brillante / estante alto', frecuencia: 12, ultimoRiego: addDaysISO(TODAY_STR, -7), icono: 'colgante', foto: '', notas: 'Dejar secar bien el sustrato; manipular con cuidado.' },
-      { id: 'p-3', nombre: 'Peperomia prostrata mini', ubicacion: 'Estante Macramé', tipo: 'Colgantes / Trepa', luz: 'Luz brillante filtrada', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -7), icono: 'colgante', foto: '', notas: 'Riego moderado cuando las hojitas pierden firmeza.' },
-      { id: 'p-4', nombre: 'Planta araña', ubicacion: 'Estante Macramé', tipo: 'Colgantes / Trepa', luz: 'Luz brillante sin sol directo fuerte', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'colgante', foto: '', notas: 'Puntas marrones si falta humedad o exceso de sales.' },
-      { id: 'p-5', nombre: 'Romero', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'menta', foto: '', notas: 'Ventilar el invernadero para evitar exceso de humedad.' },
-      { id: 'p-6', nombre: 'Perejil', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'menta', foto: '', notas: 'Mantener el sustrato ligeramente húmedo sin encharcar.' },
-      { id: 'p-7', nombre: 'Menta', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'menta', foto: '', notas: 'Agradece riego frecuente y poda suave para ramificar.' },
-      { id: 'p-8', nombre: 'Hierbabuena', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -1), icono: 'menta', foto: '', notas: 'Sustrato fresco bajo la lámpara de crecimiento.' },
-      { id: 'p-9', nombre: 'Perejil', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Luz natural de cocina', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'menta', foto: '', notas: 'Cortar tallos exteriores primero.' },
-      { id: 'p-10', nombre: 'Cebollino', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Luz natural de cocina', frecuencia: 5, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'menta', foto: '', notas: 'Buen drenaje en la maceta de cocina.' },
-      { id: 'p-11', nombre: 'Albahaca', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Mucha luz natural', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'menta', foto: '', notas: 'Proteger de corrientes frías; regar al secarse arriba.' },
-      { id: 'p-12', nombre: 'Helecho', ubicacion: 'Baño', tipo: 'Helechos y humedad', luz: 'Luz suave / humedad del baño', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -1), icono: 'helecho', foto: '', notas: 'Disfruta de la humedad ambiental del baño.' },
-      { id: 'p-13', nombre: 'Peperomia prostrata mini', ubicacion: 'Baño', tipo: 'Colgantes / Trepa', luz: 'Luz filtrada del baño', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'colgante', foto: '', notas: 'Comprobar que el sustrato drene bien.' },
-      { id: 'p-14', nombre: 'Planta araña', ubicacion: 'Baño', tipo: 'Colgantes / Trepa', luz: 'Luz suave / ambiente húmedo', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -6), icono: 'colgante', foto: '', notas: 'Revisar raíces si lleva tiempo en la misma maceta.' },
-      { id: 'p-15', nombre: 'Romero erecto o común', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'menta', foto: '', notas: 'Porte vertical; sustrato aireado y sin exceso de agua.' },
-      { id: 'p-16', nombre: 'Romero rastrero o postrado', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'colgante', foto: '', notas: 'Porte extendido o colgante; buen drenaje.' },
-      { id: 'p-17', nombre: 'Lavanda', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'La zona más luminosa del salón', frecuencia: 8, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'lavanda', foto: '', notas: 'Regar solo cuando el sustrato esté seco.' },
-      { id: 'p-18', nombre: 'Tomillo común', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Buena luz del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'menta', foto: '', notas: 'Riego espaciado y buen drenaje.' },
-      { id: 'p-19', nombre: 'Tomillo limón', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Buena luz del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -8), icono: 'menta', foto: '', notas: 'Aroma cítrico; dejar secar la capa superior entre riegos.' },
-      { id: 'p-20', nombre: 'Albahaca', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'menta', foto: '', notas: 'Pinzar flores si aparecen para potenciar el follaje.' }
+      { id: 'p-1', nombre: 'Hierbabuena', ubicacion: 'Bombillas', tipo: 'Hierbas aromáticas', luz: 'Luz indirecta / cercanía lámpara', frecuencia: 5, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'bulbilla', notas: 'Renovar agua de la bombilla y revisar raíces.' },
+      { id: 'p-2', nombre: 'Sedum burrito', ubicacion: 'Estante Macramé', tipo: 'Suculentas', luz: 'Luz brillante / estante alto', frecuencia: 12, ultimoRiego: addDaysISO(TODAY_STR, -7), icono: 'suculenta', notas: 'Dejar secar bien el sustrato; manipular con cuidado.' },
+      { id: 'p-3', nombre: 'Peperomia prostrata mini', ubicacion: 'Estante Macramé', tipo: 'Colgantes / Trepa', luz: 'Luz brillante filtrada', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -7), icono: 'peperomia', notas: 'Riego moderado cuando las hojitas pierden firmeza.' },
+      { id: 'p-4', nombre: 'Planta araña', ubicacion: 'Estante Macramé', tipo: 'Colgantes / Trepa', luz: 'Luz brillante sin sol directo fuerte', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'arana', notas: 'Puntas marrones si falta humedad o exceso de sales.' },
+      { id: 'p-5', nombre: 'Romero', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'romero', notas: 'Ventilar el invernadero para evitar exceso de humedad.' },
+      { id: 'p-6', nombre: 'Perejil', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'menta', notas: 'Mantener el sustrato ligeramente húmedo sin encharcar.' },
+      { id: 'p-7', nombre: 'Menta', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'menta', notas: 'Agradece riego frecuente y poda suave para ramificar.' },
+      { id: 'p-8', nombre: 'Hierbabuena', ubicacion: 'Invernadero', tipo: 'Hierbas aromáticas', luz: 'Lámpara de crecimiento (09:00–17:00)', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -1), icono: 'menta', notas: 'Sustrato fresco bajo la lámpara de crecimiento.' },
+      { id: 'p-9', nombre: 'Perejil', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Luz natural de cocina', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'menta', notas: 'Cortar tallos exteriores primero.' },
+      { id: 'p-10', nombre: 'Cebollino', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Luz natural de cocina', frecuencia: 5, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'cebollino', notas: 'Buen drenaje en la maceta de cocina.' },
+      { id: 'p-11', nombre: 'Albahaca', ubicacion: 'Cocina', tipo: 'Hierbas aromáticas', luz: 'Mucha luz natural', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'albahaca', notas: 'Proteger de corrientes frías; regar al secarse arriba.' },
+      { id: 'p-12', nombre: 'Helecho', ubicacion: 'Baño', tipo: 'Helechos y humedad', luz: 'Luz suave / humedad del baño', frecuencia: 4, ultimoRiego: addDaysISO(TODAY_STR, -1), icono: 'helecho', notas: 'Disfruta de la humedad ambiental del baño.' },
+      { id: 'p-13', nombre: 'Peperomia prostrata mini', ubicacion: 'Baño', tipo: 'Colgantes / Trepa', luz: 'Luz filtrada del baño', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'peperomia', notas: 'Comprobar que el sustrato drene bien.' },
+      { id: 'p-14', nombre: 'Planta araña', ubicacion: 'Baño', tipo: 'Colgantes / Trepa', luz: 'Luz suave / ambiente húmedo', frecuencia: 6, ultimoRiego: addDaysISO(TODAY_STR, -6), icono: 'arana', notas: 'Revisar raíces si lleva tiempo en la misma maceta.' },
+      { id: 'p-15', nombre: 'Romero erecto o común', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -4), icono: 'romero', notas: 'Porte vertical; sustrato aireado y sin exceso de agua.' },
+      { id: 'p-16', nombre: 'Romero rastrero o postrado', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'colgante', notas: 'Porte extendido o colgante; buen drenaje.' },
+      { id: 'p-17', nombre: 'Lavanda', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'La zona más luminosa del salón', frecuencia: 8, ultimoRiego: addDaysISO(TODAY_STR, -5), icono: 'lavanda', notas: 'Regar solo cuando el sustrato esté seco.' },
+      { id: 'p-18', nombre: 'Tomillo común', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Buena luz del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -3), icono: 'tomillo', notas: 'Riego espaciado y buen drenaje.' },
+      { id: 'p-19', nombre: 'Tomillo limón', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Buena luz del salón', frecuencia: 7, ultimoRiego: addDaysISO(TODAY_STR, -8), icono: 'tomillo', notas: 'Aroma cítrico; dejar secar la capa superior entre riegos.' },
+      { id: 'p-20', nombre: 'Albahaca', ubicacion: 'Salón', tipo: 'Hierbas aromáticas', luz: 'Luz brillante del salón', frecuencia: 3, ultimoRiego: addDaysISO(TODAY_STR, -2), icono: 'albahaca', notas: 'Pinzar flores si aparecen para potenciar el follaje.' }
     ];
 
     let state = {
@@ -1281,7 +1479,7 @@
           const res = await fetch(GOOGLE_SHEET_API_URL);
           const data = await res.json();
           if (data.status === 'ok' && Array.isArray(data.plantas) && data.plantas.length > 0) {
-            state.plants = data.plantas.map(p => ({ ...p, foto: '' }));
+            state.plants = data.plantas.map(p => ({ ...p }));
             saveLocalBackup();
             refreshAll(false);
           }
@@ -1413,7 +1611,6 @@
     }
 
     function renderPlantVisual(plant) {
-      if (plant.foto) return `<img src="${plant.foto}" alt="${escapeHtml(plant.nombre)}" />`;
       const iconObj = PLANT_ICONS[plant.icono] || PLANT_ICONS.menta;
       return iconObj.svg;
     }
@@ -1546,7 +1743,6 @@
     const form = document.getElementById('plantForm');
     const iconPicker = document.getElementById('iconPicker');
     let selectedIcon = 'menta';
-    let uploadedPhotoData = '';
 
     function renderIconPicker() {
       iconPicker.innerHTML = Object.entries(PLANT_ICONS).map(([key, obj]) => `
@@ -1559,8 +1755,6 @@
       iconPicker.querySelectorAll('.icon-option').forEach(btn => {
         btn.addEventListener('click', () => {
           selectedIcon = btn.dataset.icon;
-          uploadedPhotoData = '';
-          document.getElementById('plantPhotoInput').value = '';
           renderIconPicker();
         });
       });
@@ -1573,7 +1767,6 @@
       document.getElementById('plantFreq').value = 5;
       document.getElementById('plantLastWater').value = TODAY_STR;
       selectedIcon = 'menta';
-      uploadedPhotoData = '';
       renderIconPicker();
       modal.classList.add('open');
     }
@@ -1590,9 +1783,7 @@
       document.getElementById('plantFreq').value = p.frecuencia;
       document.getElementById('plantLastWater').value = p.ultimoRiego;
       document.getElementById('plantNotes').value = p.notas || '';
-      document.getElementById('plantPhotoInput').value = '';
       selectedIcon = p.icono || 'menta';
-      uploadedPhotoData = p.foto || '';
       renderIconPicker();
       modal.classList.add('open');
     };
@@ -1603,14 +1794,6 @@
     document.getElementById('closeModalBtn').addEventListener('click', closeModal);
     document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-    document.getElementById('plantPhotoInput').addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => { uploadedPhotoData = reader.result; };
-      reader.readAsDataURL(file);
-    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1627,7 +1810,6 @@
         frecuencia: Math.max(1, Number(document.getElementById('plantFreq').value) || 5),
         ultimoRiego: document.getElementById('plantLastWater').value || TODAY_STR,
         icono: selectedIcon,
-        foto: uploadedPhotoData,
         notas: document.getElementById('plantNotes').value.trim()
       };
 
