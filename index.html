@@ -1169,8 +1169,7 @@
       </form>
     </div>
   </div>
-
-  <script>
+<script>
     const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbzS0LLU-BDtS2HYk6-GiOxFyHcrjkyudnmN1uS5skXltcipGH10bpIf8pGY8GkwLDbn1g/exec';
     const STORAGE_KEY = 'grimorio_botanico_meiga_v5';
 
@@ -1181,8 +1180,18 @@
       return `${y}-${m}-${d}`;
     }
 
+    function normalizeDateStr(raw) {
+      if (!raw) return TODAY_STR;
+      const str = String(raw).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+      const dt = new Date(str);
+      if (!isNaN(dt.getTime())) return formatDateISO(dt);
+      return str.slice(0, 10);
+    }
+
     function addDaysISO(isoStr, days) {
-      const [y, m, d] = isoStr.split('-').map(Number);
+      const cleanDate = normalizeDateStr(isoStr);
+      const [y, m, d] = cleanDate.split('-').map(Number);
       const dt = new Date(y, m - 1, d);
       dt.setDate(dt.getDate() + Number(days || 0));
       return formatDateISO(dt);
@@ -1531,7 +1540,10 @@
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed.plants) && parsed.plants.length > 0) {
-            state.plants = parsed.plants;
+            state.plants = parsed.plants.map(p => ({
+              ...p,
+              ultimoRiego: normalizeDateStr(p.ultimoRiego)
+            }));
             if (parsed.view === 'cards' || parsed.view === 'table') {
               state.view = parsed.view;
             } else {
@@ -1552,7 +1564,10 @@
           const res = await fetch(GOOGLE_SHEET_API_URL);
           const data = await res.json();
           if (data.status === 'ok' && Array.isArray(data.plantas) && data.plantas.length > 0) {
-            state.plants = data.plantas.map(p => ({ ...p }));
+            state.plants = data.plantas.map(p => ({
+              ...p,
+              ultimoRiego: normalizeDateStr(p.ultimoRiego)
+            }));
             saveLocalBackup();
             refreshAll(false);
           }
@@ -1854,7 +1869,7 @@
       document.getElementById('plantType').value = p.tipo;
       document.getElementById('plantLight').value = p.luz || '';
       document.getElementById('plantFreq').value = p.frecuencia;
-      document.getElementById('plantLastWater').value = p.ultimoRiego;
+      document.getElementById('plantLastWater').value = normalizeDateStr(p.ultimoRiego);
       document.getElementById('plantNotes').value = p.notas || '';
       selectedIcon = p.icono || 'menta';
       renderIconPicker();
@@ -1881,7 +1896,7 @@
         tipo: document.getElementById('plantType').value,
         luz: document.getElementById('plantLight').value.trim(),
         frecuencia: Math.max(1, Number(document.getElementById('plantFreq').value) || 5),
-        ultimoRiego: document.getElementById('plantLastWater').value || TODAY_STR,
+        ultimoRiego: normalizeDateStr(document.getElementById('plantLastWater').value || TODAY_STR),
         icono: selectedIcon,
         notas: document.getElementById('plantNotes').value.trim()
       };
@@ -1971,5 +1986,6 @@
     renderIconPicker();
     loadPlantsData();
   </script>
+  
 </body>
 </html>
