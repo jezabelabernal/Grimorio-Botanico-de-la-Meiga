@@ -158,14 +158,14 @@
       box-shadow: 0 0 12px rgba(86, 180, 211, 0.25);
     }
 
-    .btn-sm { padding: 0.38rem 0.75rem; font-size: 0.79rem; }
+    .btn-sm { padding: 0.34rem 0.65rem; font-size: 0.76rem; }
 
     main.container {
       position: relative;
       z-index: 1;
-      max-width: 1280px;
+      max-width: 1340px;
       margin: 0 auto;
-      padding: 1.5rem 1.25rem 3.5rem;
+      padding: 1.5rem 1rem 3.5rem;
     }
 
     .scenes-panel {
@@ -511,11 +511,12 @@
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.32rem;
-      font-size: 0.77rem;
+      gap: 0.3rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      padding: 0.24rem 0.65rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 999px;
+      white-space: nowrap;
     }
 
     .status-today { background: var(--sun-soft); color: #ffd670; border: 1px solid rgba(255, 214, 112, 0.35); }
@@ -549,17 +550,29 @@
       overflow-x: auto;
       box-shadow: var(--shadow-deep);
       margin-bottom: 1.5rem;
+      width: 100%;
     }
 
-    table.plants-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; text-align: left; }
-    table.plants-table thead { background: #0a130d; color: #fae3ab; border-bottom: 1px solid var(--border-gold); }
+    table.plants-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.81rem;
+      text-align: left;
+    }
+
+    table.plants-table thead {
+      background: #0a130d;
+      color: #fae3ab;
+      border-bottom: 1px solid var(--border-gold);
+    }
 
     table.plants-table th {
-      padding: 0.8rem 0.85rem;
+      padding: 0.68rem 0.52rem;
       font-family: 'Cinzel Decorative', serif;
-      font-size: 0.74rem;
-      letter-spacing: 0.03em;
-      white-space: nowrap;
+      font-size: 0.68rem;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+      vertical-align: middle;
     }
 
     table.plants-table th.sortable {
@@ -575,10 +588,11 @@
 
     .sort-arrows {
       display: inline-block;
-      margin-left: 0.35rem;
-      font-size: 0.68rem;
+      margin-left: 0.22rem;
+      font-size: 0.64rem;
       opacity: 0.45;
       font-family: 'Plus Jakarta Sans', sans-serif;
+      white-space: nowrap;
     }
 
     table.plants-table th.sortable.sorted-asc .sort-arrows,
@@ -588,19 +602,30 @@
     }
 
     table.plants-table td {
-      padding: 0.72rem 0.85rem;
+      padding: 0.62rem 0.52rem;
       border-bottom: 1px solid rgba(223, 176, 88, 0.14);
       vertical-align: middle;
       color: var(--ink-light);
+    }
+
+    table.plants-table td.col-notes {
+      max-width: 190px;
+      color: var(--ink-soft);
+      font-size: 0.78rem;
+    }
+
+    table.plants-table td.col-date {
+      white-space: nowrap;
+      font-size: 0.78rem;
     }
 
     table.plants-table tbody tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
     table.plants-table tbody tr:hover { background: rgba(223, 176, 88, 0.07); }
 
     .table-mini-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       background: #0a140e;
       border: 1px solid rgba(223, 176, 88, 0.25);
       display: inline-flex;
@@ -608,11 +633,12 @@
       justify-content: center;
       overflow: hidden;
       vertical-align: middle;
-      margin-right: 0.48rem;
+      margin-right: 0.4rem;
+      flex-shrink: 0;
     }
 
     .table-mini-icon img { width: 100%; height: 100%; object-fit: cover; }
-    .table-mini-icon svg { width: 28px; height: 28px; }
+    .table-mini-icon svg { width: 24px; height: 24px; }
 
     .modal-backdrop {
       position: fixed;
@@ -1115,9 +1141,9 @@
             <th class="sortable" data-sort="ubicacion">Ubicación <span class="sort-arrows">▲▼</span></th>
             <th class="sortable" data-sort="tipo">Tipo <span class="sort-arrows">▲▼</span></th>
             <th class="sortable" data-sort="luz">Sol / Luz <span class="sort-arrows">▲▼</span></th>
-            <th class="sortable" data-sort="frecuencia">Cada (días) <span class="sort-arrows">▲▼</span></th>
-            <th class="sortable" data-sort="ultimoRiego">Último riego <span class="sort-arrows">▲▼</span></th>
-            <th class="sortable" data-sort="proximoRiego">Próximo riego <span class="sort-arrows">▲▼</span></th>
+            <th class="sortable" data-sort="frecuencia">Cada<br>(días) <span class="sort-arrows">▲▼</span></th>
+            <th class="sortable" data-sort="ultimoRiego">Último<br>riego <span class="sort-arrows">▲▼</span></th>
+            <th class="sortable" data-sort="proximoRiego">Próximo<br>riego <span class="sort-arrows">▲▼</span></th>
             <th class="sortable" data-sort="estado">Estado <span class="sort-arrows">▲▼</span></th>
             <th>Cuidados</th>
             <th>Acciones</th>
@@ -1877,17 +1903,19 @@
         return `
           <tr>
             <td>
-              <span class="table-mini-icon">${renderPlantVisual(p)}</span>
-              <strong>${escapeHtml(p.nombre)}</strong>
+              <div style="display:flex; align-items:center;">
+                <span class="table-mini-icon">${renderPlantVisual(p)}</span>
+                <strong>${escapeHtml(p.nombre)}</strong>
+              </div>
             </td>
             <td>${escapeHtml(p.ubicacion)}</td>
             <td>${escapeHtml(p.tipo)}</td>
             <td>${escapeHtml(p.luz || '—')}</td>
-            <td>${p.frecuencia}</td>
-            <td>${p.ultimoRiego}</td>
-            <td>${st.nextDate}</td>
+            <td style="text-align:center;">${p.frecuencia}</td>
+            <td class="col-date">${p.ultimoRiego}</td>
+            <td class="col-date">${st.nextDate}</td>
             <td><span class="status-badge ${st.badgeClass}">${st.icon} ${st.label}</span></td>
-            <td>${escapeHtml(p.notas || '—')}</td>
+            <td class="col-notes">${escapeHtml(p.notas || '—')}</td>
             <td style="white-space:nowrap;">
               <button type="button" class="btn btn-water btn-sm" onclick="waterPlant('${p.id}')">💧 Regar</button>
               <button type="button" class="btn btn-soft btn-sm" onclick="openEditModal('${p.id}')">✏️</button>
